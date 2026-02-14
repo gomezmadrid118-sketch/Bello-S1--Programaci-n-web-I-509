@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan de Curso - CESDE</title>
+    <title>Web I</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://www.cesde.edu.co/wp-content/uploads/2022/11/cropped-favicon-32x32.png" sizes="32x32">
     <script>
         tailwind.config = {
             theme: {
@@ -36,6 +37,40 @@
             scrollbar-width: thin;
             scrollbar-color: #555 #1e1e1e;
         }
+
+        /* Sistema de sidebar para desktop */
+        @media (min-width: 768px) {
+            #sidebar.sidebar-hidden {
+                transform: translateX(-100%) !important;
+            }
+
+            #sidebar.sidebar-visible {
+                transform: translateX(0) !important;
+            }
+
+            #toggle-sidebar-btn {
+                transition: left 0.3s ease-in-out;
+            }
+
+            #toggle-sidebar-btn.btn-with-sidebar {
+                left: 18rem;
+                /* 72 * 4px = 288px = 18rem */
+            }
+
+            #toggle-sidebar-btn.btn-without-sidebar {
+                left: 1rem;
+            }
+
+            /* Contenedor de contenido ampliado */
+            .content-container.expanded {
+                max-width: 90% !important;
+            }
+
+            .content-container.normal {
+                max-width: 56rem;
+                /* max-w-4xl = 896px */
+            }
+        }
     </style>
 </head>
 
@@ -51,7 +86,7 @@
     </header>
 
     <aside id="sidebar"
-        class="bg-cesde-sidebar text-gray-400 w-72 flex-shrink-0 fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40 border-r border-gray-800 flex flex-col h-full">
+        class="bg-cesde-sidebar text-gray-400 w-72 flex-shrink-0 fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40 border-r border-gray-800 flex flex-col h-full sidebar-visible">
 
         <div class="p-6 text-center border-b border-gray-800">
             <img src="src/logo.png" alt="CESDE Logo"
@@ -62,7 +97,7 @@
             <ul class="space-y-1">
                 <li>
                     <a href="index.html"
-                        class="block py-2 px-6 bg-gray-900 border-l-4 border-cesde-primary text-white font-medium text-sm">
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
                         Recurso Global
                     </a>
                 </li>
@@ -74,13 +109,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="proximamente.html"
-                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                    <a href="semana2.html"
+                        class="block py-2 px-6 bg-gray-900 border-l-4 border-cesde-primary text-white font-medium text-sm">
                         Semana 2: Condicionales
                     </a>
                 </li>
                 <li>
-                    <a href="proximamente.html"
+                    <a href="semana3.html"
                         class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
                         Semana 3: Ciclos
                     </a>
@@ -190,58 +225,763 @@
     </aside>
 
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
-    <main class="flex-1 flex flex-col items-center justify-center p-6 text-center relative w-full h-full bg-white">
 
-        <div class="max-w-md w-full animate-float">
-            <div class="relative w-32 h-32 mx-auto mb-8">
-                <div class="absolute inset-0 bg-cesde-primary opacity-10 rounded-full blur-xl"></div>
-                <svg class="w-full h-full text-cesde-primary relative z-10" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                    </path>
-                </svg>
-                <div class="absolute -bottom-2 -right-2 bg-black text-white p-2 rounded-full border-4 border-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
+    <!-- Botón para ocultar/mostrar sidebar en desktop -->
+    <button id="toggle-sidebar-btn"
+        class="hidden md:block fixed top-4 z-50 bg-cesde-primary text-white p-3 rounded-lg shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-cesde-primary focus:ring-offset-2 btn-with-sidebar">
+        <svg id="menu-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7">
+            </path>
+        </svg>
+    </button>
+
+    <main id="main-content" class="flex-1 overflow-y-auto w-full relative transition-all duration-300">
+        <div id="content-container"
+            class="content-container normal mx-auto p-6 md:p-10 pb-20 transition-all duration-300">
+
+            <div class="mb-8 border-b pb-4">
+                <small class="text-cesde-primary font-bold tracking-widest uppercase">Unidad I - Generalidades de
+                    Javascript</small>
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">Semana 2: Condicionales</h1>
+                <p class="text-gray-500 mt-2">Temas: Condicionales en JavaScript utilizando if, else, else if y switch.
+                    Introducción concepto de callstacky.</p>
             </div>
 
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Contenido Programado</h1>
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    Situación: La App de Café
+                </h2>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <p class="leading-relaxed text-gray-600 mb-4">
+                        En la sesión anterior, aprendimos a hacer comparaciones. Escribimos <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">let edad = 20;</code> y luego <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">console.log(edad > 18);</code> y la consola
+                        nos devolvió <code class="bg-gray-200 px-2 py-1 rounded text-sm">true</code>. Pero, ¿qué hacemos
+                        con ese <code class="bg-gray-200 px-2 py-1 rounded text-sm">true</code>? Es solo información.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Imagina que estás programando un videojuego. El jugador presiona la tecla de salto. Tu código
+                        debe decidir:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-3 ml-4 text-gray-700">
+                        <li>
+                            <strong>SI</strong> (<code class="bg-gray-200 px-2 py-1 rounded text-sm">if</code>) el
+                            personaje está en el suelo (<code
+                                class="bg-gray-200 px-2 py-1 rounded text-sm">personaje.estaEnSuelo === true</code>),
+                            <strong>ENTONCES</strong> ejecutas la animación de salto y aplicas la física para moverlo
+                            hacia arriba.
+                        </li>
+                        <li>
+                            <strong>SI NO</strong> (<code class="bg-gray-200 px-2 py-1 rounded text-sm">else</code>), el
+                            personaje está en el aire, <strong>ENTONCES</strong> no haces nada (o reproduces un sonido
+                            de "ya estás saltando").
+                        </li>
+                    </ol>
+                    <p class="text-gray-700 leading-relaxed mt-4">
+                        Esa capacidad de tomar una decisión basada en un valor booleano (<code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">true</code> o <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">false</code>) es lo que separa a una
+                        calculadora de una aplicación interactiva. Los condicionales son el "cerebro" de nuestro
+                        programa, el mecanismo que nos permite ejecutar diferentes bloques de código según la situación.
+                    </p>
+                </div>
+            </section>
 
-            <p class="text-gray-500 text-lg mb-8 leading-relaxed">
-                ¡Vas muy rápido!<br>
-                Este módulo se desbloqueará progresivamente según el cronograma del curso.
-            </p>
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-cesde-primary pl-4">El Flujo de
+                    Ejecución y el Call Stack</h2>
+
+                <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Antes de romper el flujo con condicionales, debemos entender cómo lee JavaScript.
+                    </p>
+
+                    <div class="bg-white p-5 rounded-lg border-l-4 border-blue-500 mb-6">
+                        <p class="text-gray-800 font-semibold mb-2">
+                            JavaScript es <strong>Single Threaded</strong> (Un solo hilo). Significa que solo puede
+                            hacer una cosa a la vez. No puede sumar y restar al mismo tiempo.
+                        </p>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">El Call Stack (Pila de Llamadas):</h3>
+                    <p class="text-gray-700 leading-relaxed mb-3">Imagina una pila de platos sucios.</p>
+
+                    <ol class="list-decimal list-inside space-y-2 ml-4 text-gray-700 mb-6">
+                        <li>Pones un plato encima de otro.</li>
+                        <li>Para lavar, debes tomar el de arriba (el último que pusiste) antes de llegar al de abajo (el
+                            primero).</li>
+                        <li>Esto se llama <strong>LIFO</strong> (Last In, First Out).</li>
+                    </ol>
+
+                    <div class="bg-blue-50 p-5 rounded-lg border border-blue-200">
+                        <p class="text-gray-800 font-semibold mb-2">En la práctica (por ahora):</p>
+                        <p class="text-gray-700 leading-relaxed">
+                            Aunque aún no vemos funciones complejas, debes saber que el motor de JS lee tu archivo de
+                            arriba a abajo. Cuando entra en un <code
+                                class="bg-gray-200 px-2 py-1 rounded text-sm">if</code>, "apila" esa tarea, la resuelve,
+                            y si no se cumple, la "desapila" y pasa a la siguiente línea.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-cesde-primary pl-4">Repaso Esencial y
+                    Conexión</h2>
+
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border border-purple-200">
+                    <p class="text-gray-700 leading-relaxed">
+                        Recordemos los operadores. Aprendimos que una expresión como <code
+                            class="bg-white px-2 py-1 rounded text-sm border border-gray-300">(edad >= 18) && (tieneTicket === true)</code>
+                        se evalúa y se reduce a un único valor: <code
+                            class="bg-white px-2 py-1 rounded text-sm border border-gray-300">true</code> o <code
+                            class="bg-white px-2 py-1 rounded text-sm border border-gray-300">false</code>. Hoy,
+                        usaremos esos valores booleanos como la "llave" para abrir (o mantener cerradas) puertas en
+                        nuestro código.
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">Tipos de
+                    Estructuras Condicionales</h2>
+
+                <!-- Condicional Simple (if) -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-cesde-primary mb-3">Condicional Simple (if)</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Es la estructura de decisión más básica. Ejecuta un bloque de código solo si la condición es
+                        verdadera.
+                    </p>
+
+                    <div class="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500 mb-4">
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>Piensa en el <code class="bg-white px-2 py-1 rounded text-sm">if</code> como una puerta
+                                con una cerradura.</li>
+                            <li>La <code class="bg-white px-2 py-1 rounded text-sm">condicion</code> es la llave.</li>
+                            <li><strong>SI</strong> (<code class="bg-white px-2 py-1 rounded text-sm">if</code>) la
+                                llave es la correcta (<code class="bg-white px-2 py-1 rounded text-sm">true</code>), la
+                                puerta se abre y puedes acceder a lo que hay dentro del bloque <code
+                                    class="bg-white px-2 py-1 rounded text-sm">{ ... }</code>.</li>
+                            <li>Si la llave es incorrecta (<code
+                                    class="bg-white px-2 py-1 rounded text-sm">false</code>), la puerta permanece
+                                cerrada y el código dentro del bloque se ignora por completo.</li>
+                        </ul>
+                    </div>
+
+                    <p class="text-sm font-semibold text-gray-600 mb-2">Ejemplo:</p>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code>// La condición (debe evaluarse a true o false)
+if (condicionBooleana) {
+  // ... bloque de código ...
+  // Esto solo se ejecuta si la condición es true
+}
+// El código continúa aquí...</code></pre>
+                </div>
+
+                <!-- Condicional Doble (if...else) -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-cesde-primary mb-3">Condicional Doble (if...else)</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Esta estructura nos da un camino alternativo. Ejecuta un bloque si la condición es <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">true</code> y un bloque diferente si es <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">false</code>.
+                    </p>
+
+                    <div class="bg-green-50 p-5 rounded-lg border-l-4 border-green-500 mb-4">
+                        <p class="text-gray-800 mb-3">Estás frente a una bifurcación con un letrero (la condicion).</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><strong>SI</strong> (<code class="bg-white px-2 py-1 rounded text-sm">if</code>) el
+                                letrero dice "Norte" (<code class="bg-white px-2 py-1 rounded text-sm">true</code>),
+                                tomas el camino A (el bloque if).</li>
+                            <li><strong>SI NO</strong> (<code class="bg-white px-2 py-1 rounded text-sm">else</code>),
+                                tomas el camino B (el bloque else).</li>
+                            <li>No puedes tomar ambos caminos, y no puedes quedarte quieto. Estás obligado a elegir uno.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code>if (condicionBooleana) {
+  // ... bloque A ...
+  // Se ejecuta si la condición es true
+} else {
+  // ... bloque B ...
+  // Se ejecuta si la condición es false
+}</code></pre>
+                </div>
+
+                <!-- Condicional Múltiple (if...else if...else) -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-cesde-primary mb-3">Condicional Múltiple (if...else if...else)
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Nos permite encadenar múltiples preguntas en orden. Es crucial para manejar más de dos posibles
+                        resultados.
+                    </p>
+
+                    <div class="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500 mb-4">
+                        <p class="text-gray-800 font-semibold mb-3">Un profesor califica un examen:</p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700 mb-4">
+                            <li><strong>SI</strong> (<code class="bg-white px-2 py-1 rounded text-sm">if</code>) la nota
+                                es > 90, es una "A".</li>
+                            <li><strong>SI NO, PERO SI</strong> (<code
+                                    class="bg-white px-2 py-1 rounded text-sm">else if</code>) la nota es > 80, es una
+                                "B".</li>
+                            <li><strong>SI NO, PERO SI</strong> (<code
+                                    class="bg-white px-2 py-1 rounded text-sm">else if</code>) la nota es > 70, es una
+                                "C".</li>
+                            <li><strong>SI NO</strong> (<code class="bg-white px-2 py-1 rounded text-sm">else</code>)
+                                (para todos los demás casos), es una "F".</li>
+                        </ol>
+                        <div class="bg-purple-100 p-3 rounded border border-purple-300">
+                            <p class="text-gray-800 text-sm">
+                                <strong>Importante:</strong> El código comprueba las condiciones en orden y se detiene
+                                en la primera que sea <code class="bg-white px-2 py-1 rounded text-sm">true</code>. Si
+                                la nota es 95, entra en el primer <code
+                                    class="bg-white px-2 py-1 rounded text-sm">if</code> y NUNCA revisará las otras
+                                condiciones.
+                            </p>
+                        </div>
+                    </div>
+
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code>if (condicion1) {
+  // Bloque A
+} else if (condicion2) {
+  // Bloque B (Solo se revisa si la condicion1 fue false)
+} else if (condicion3) {
+  // Bloque C (Solo se revisa si 1 y 2 fueron false)
+} else {
+  // Bloque D (El "default", si ninguna fue true)
+}</code></pre>
+                </div>
+
+                <!-- Valores Truthy y Falsy -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-cesde-primary mb-3">Valores "Truthy" y "Falsy"</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Este es un concepto fundamental en JavaScript. Las estructuras <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">if</code> no solo comprueban <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">true</code> o <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">false</code>. Comprueban la "veracidad" de un
+                        valor.
+                    </p>
+
+                    <div class="bg-green-50 p-5 rounded-lg border-l-4 border-green-500 mb-4">
+                        <p class="text-gray-800 mb-3">
+                            En JavaScript, casi todo es <strong>"verdadero" (truthy)</strong>: <code
+                                class="bg-white px-2 py-1 rounded text-sm">"Hola"</code>, <code
+                                class="bg-white px-2 py-1 rounded text-sm">1</code>, <code
+                                class="bg-white px-2 py-1 rounded text-sm">-10</code>, <code
+                                class="bg-white px-2 py-1 rounded text-sm">[]</code> (Array vacío), <code
+                                class="bg-white px-2 py-1 rounded text-sm">{}</code> (Objeto vacío).
+                        </p>
+                    </div>
+
+                    <div class="bg-red-50 p-5 rounded-lg border-l-4 border-red-500 mb-4">
+                        <p class="text-gray-800 font-semibold mb-3">Excepto por estos 7 valores Falsy:</p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">false</code></li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">0</code> (el número cero)</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">-0</code> (cero negativo)</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">""</code> (un string vacío)</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">null</code></li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">undefined</code></li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">NaN</code> (Not a Number)</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-300 mb-4">
+                        <p class="text-gray-800 text-sm">
+                            <strong>¿Por qué es esto importante?</strong> Te permite escribir código mucho más conciso y
+                            profesional para verificar si una variable "tiene algo".
+                        </p>
+                    </div>
+
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">Anatomía del Código</h4>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-3"><code>let nombreUsuario = ""; // El usuario no escribió nada
+
+// Forma Larga (Principiante)
+if (nombreUsuario !== "") {
+  console.log(`Bienvenido, ${nombreUsuario}`);
+} else {
+  console.log("Bienvenido, Invitado.");
+}
+
+// Forma Corta (Profesional) - "Si nombreUsuario es truthy..."
+if (nombreUsuario) {
+  console.log(`Bienvenido, ${nombreUsuario}`);
+} else {
+  console.log("Bienvenido, Invitado.");
+}
+// Ambos códigos hacen lo mismo, pero el segundo es más idiomático de JavaScript.</code></pre>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">Otras Estructuras de Control</h2>
+                
+                <!-- El Operador switch -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-cesde-primary mb-3">El Operador switch</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        El <code class="bg-gray-200 px-2 py-1 rounded text-sm">switch</code> es una alternativa al <code class="bg-gray-200 px-2 py-1 rounded text-sm">if...else if...else</code> que es más limpia solo cuando comparas una única variable contra múltiples valores exactos.
+                    </p>
+                    
+                    <div class="bg-indigo-50 p-5 rounded-lg border-l-4 border-indigo-500 mb-4">
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>El <code class="bg-white px-2 py-1 rounded text-sm">switch</code> evalúa tu variable (la opción que elegiste).</li>
+                            <li>Busca un <code class="bg-white px-2 py-1 rounded text-sm">case</code> (caso) que coincida exactamente.</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">case "Girar Dinero":</code> → Ejecuta el código para girar dinero.</li>
+                            <li><strong>Clave:</strong> Usa comparación estricta (<code class="bg-white px-2 py-1 rounded text-sm">===</code>).</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">break;</code>: Es crucial. Es como presionar "Finalizar". Si lo olvidas, la máquina "cae" (fall-through) y ejecuta también la siguiente opción (ej. "Consultar Saldo").</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">default:</code>: Es la opción para "Otro" o si presionas una tecla inválida.</li>
+                        </ul>
+                    </div>
+                    
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">Anatomía del Código</h4>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4"><code>let diaSemana = "Martes";
+
+switch (diaSemana) {
+  case "Lunes":
+    console.log("Inicio de semana laboral.");
+    break; // ¡No olvides el break!
+  case "Martes":
+    console.log("Día de reunión de equipo.");
+    break;
+  case "Viernes":
+    console.log("¡Casi fin de semana!");
+    break;
+  default:
+    console.log("Es otro día de la semana.");
+}</code></pre>
+                </div>
+
+                <!-- El Operador Ternario -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-cesde-primary mb-3">El Operador Ternario (? :)</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Es un <code class="bg-gray-200 px-2 py-1 rounded text-sm">if...else</code> en una sola línea. No es un bloque de código, sino una <strong>expresión</strong> (es decir, devuelve un valor).
+                    </p>
+                    
+                    <div class="bg-cyan-50 p-5 rounded-lg border-l-4 border-cyan-500 mb-4">
+                        <p class="text-gray-800 font-semibold mb-3">Analogía:</p>
+                        <p class="text-gray-700 mb-3">Es un interruptor simple. Solo tiene dos estados y devuelve uno u otro.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">(condición)</code>: El interruptor.</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">?</code>: ¿Está encendido?</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">valorSiTrue</code>: Devuelve "luz".</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">:</code>: Si no...</li>
+                            <li><code class="bg-white px-2 py-1 rounded text-sm">valorSiFalse</code>: Devuelve "oscuridad".</li>
+                        </ul>
+                    </div>
+                    
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">Anatomía del Código</h4>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-3"><code>let edad = 20;
+
+// Forma if...else (Verborrágica)
+let mensaje;
+if (edad >= 18) {
+  mensaje = "Es mayor de edad";
+} else {
+  mensaje = "Es menor de edad";
+}
+console.log(mensaje);
+
+// Forma Ternaria (Concisa y Moderna)
+const mensajeTernario = (edad >= 18) ? "Es mayor de edad" : "Es menor de edad";
+//                      (condición)  ?   (valor si true)  :   (valor si false)
+console.log(mensajeTernario);</code></pre>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">Preguntas Frecuentes</h2>
+                
+                <!-- Pregunta 1 -->
+                <div class="mb-6 bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-400">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">
+                        ¿Cuándo uso un <code class="bg-gray-100 px-2 py-1 rounded text-sm">if...else if</code> y cuándo un <code class="bg-gray-100 px-2 py-1 rounded text-sm">switch</code>?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Usa <code class="bg-gray-100 px-2 py-1 rounded text-sm">if...else if</code> cuando necesites evaluar rangos o condiciones complejas (ej. <code class="bg-gray-100 px-2 py-1 rounded text-sm">if (edad > 18 && pais === "Colombia")</code>). Usa <code class="bg-gray-100 px-2 py-1 rounded text-sm">switch</code> cuando estés comprobando el valor de una sola variable contra una lista de valores exactos (ej. <code class="bg-gray-100 px-2 py-1 rounded text-sm">switch (diaDeLaSemana) { case "Lunes": ... }</code>).
+                    </p>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="mb-6 bg-white p-6 rounded-lg shadow-sm border-l-4 border-purple-400">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">
+                        ¿Por qué <code class="bg-gray-100 px-2 py-1 rounded text-sm">if (0)</code> es falso? Creí que if solo revisaba true o false.
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Esta es la diferencia clave entre JavaScript y otros lenguajes. El <code class="bg-gray-100 px-2 py-1 rounded text-sm">if</code> no comprueba si la condición es igual a <code class="bg-gray-100 px-2 py-1 rounded text-sm">true</code>, comprueba si es <strong>truthy</strong>. Como <code class="bg-gray-100 px-2 py-1 rounded text-sm">0</code> (el número cero) está en la lista de los 7 valores falsy, el bloque if lo trata como si fuera <code class="bg-gray-100 px-2 py-1 rounded text-sm">false</code> y no se ejecuta. Lo mismo pasa con un string vacío (<code class="bg-gray-100 px-2 py-1 rounded text-sm">""</code>), <code class="bg-gray-100 px-2 py-1 rounded text-sm">null</code> o <code class="bg-gray-100 px-2 py-1 rounded text-sm">undefined</code>.
+                    </p>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="mb-6 bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-400">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">
+                        ¿Puedo poner un <code class="bg-gray-100 px-2 py-1 rounded text-sm">if</code> dentro de otro <code class="bg-gray-100 px-2 py-1 rounded text-sm">if</code>?
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Sí, se llama <strong>anidamiento</strong> (Nesting). Sin embargo, evita anidar más de 2 o 3 niveles, porque el código se vuelve difícil de leer ("Spaghetti Code"). Si necesitas anidar mucho, probablemente necesites repensar tu lógica o usar operadores lógicos <code class="bg-gray-100 px-2 py-1 rounded text-sm">&&</code>.
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">Ejemplos Prácticos</h2>
+                
+                <!-- Ejemplo 1: Verificador de Contraseña -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                        <span class="bg-cesde-primary text-white rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm">1</span>
+                        Verificador de Contraseña
+                    </h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code>let password = "123";
+
+if (password.length < 8) {
+  console.log("Error: La contraseña es demasiado corta (mínimo 8 caracteres).");
+} else {
+  console.log("Contraseña aceptada.");
+}</code></pre>
+                </div>
+
+                <!-- Ejemplo 2: Mensaje de Bienvenida (Ternario) -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                        <span class="bg-cesde-primary text-white rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm">2</span>
+                        Mensaje de Bienvenida (Ternario)
+                    </h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code>let estaLogueado = true; 
+const saludo = estaLogueado ? "Bienvenido de vuelta" : "Por favor, inicia sesión"; 
+console.log(saludo);</code></pre>
+                </div>
+
+                <!-- Ejemplo 3: Asignación de Roles (switch) -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                        <span class="bg-cesde-primary text-white rounded-full w-8 h-8 flex items-center justify-center mr-3 text-sm">3</span>
+                        Asignación de Roles (switch)
+                    </h3>
+                    <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code>let codigoUsuario = "USER_01";
+let permisos;
+
+switch (codigoUsuario) {
+  case "ADMIN_00":
+  case "ADMIN_01": // Se pueden apilar 'cases'
+    permisos = "Acceso Total";
+    break;
+  case "USER_01":
+    permisos = "Acceso de Lector";
+    break;
+  default:
+    permisos = "Sin Acceso";
+}
+console.log(`El usuario tiene permisos de: ${permisos}`);</code></pre>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">Práctica Acompañada</h2>
+                
+                <!-- Práctica A -->
+                <div class="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-lg border border-orange-200 mb-6">
+                    <h3 class="text-xl font-bold text-orange-800 mb-4">
+                         Práctica A: "Clasificador de Entradas de Cine"
+                    </h3>
+                    
+                    <div class="bg-white p-5 rounded-lg mb-4">
+                        <p class="text-gray-800 font-semibold mb-3"> Misión:</p>
+                        <p class="text-gray-700 mb-4">
+                            Determinar el precio de una entrada de cine basado en la edad del espectador.
+                        </p>
+                        
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                            <li><strong>Niños</strong> (menores de 12): $5</li>
+                            <li><strong>Adolescentes</strong> (12 a 17): $8</li>
+                            <li><strong>Adultos</strong> (18 a 64): $12</li>
+                            <li><strong>Adulto Mayor</strong> (65 o más): $6</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500">
+                        <p class="text-gray-800 font-semibold mb-3"> Paso a paso:</p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700 ml-2">
+                            <li>Abre tu consola.</li>
+                            <li>Crea la variable de entrada: <code class="bg-white px-2 py-1 rounded text-sm">const edad = 25;</code></li>
+                            <li>Crea la variable de salida: <code class="bg-white px-2 py-1 rounded text-sm">let precioEntrada;</code></li>
+                            <li>Escribe el <code class="bg-white px-2 py-1 rounded text-sm">if</code> principal: Comprueba si <code class="bg-white px-2 py-1 rounded text-sm">edad < 12</code>.</li>
+                            <li>Encadena los <code class="bg-white px-2 py-1 rounded text-sm">else if</code>: Añade las condiciones para los otros rangos de edad (<code class="bg-white px-2 py-1 rounded text-sm">edad <= 17</code>, <code class="bg-white px-2 py-1 rounded text-sm">edad <= 64</code>).</li>
+                            <li>Añade el <code class="bg-white px-2 py-1 rounded text-sm">else</code> final: El <code class="bg-white px-2 py-1 rounded text-sm">else</code> cubrirá a los adultos mayores.</li>
+                            <li>Muestra el resultado: Imprime el precio en consola.</li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Solución Desplegable -->
+                    <details class="mt-6">
+                        <summary class="cursor-pointer bg-cesde-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-pink-700 transition-colors inline-block">
+                             Ver Solución
+                        </summary>
+                        <div class="mt-4 bg-gray-900 text-gray-100 p-4 rounded-lg">
+                            <pre><code>const edad = 25;
+let precioEntrada;
+
+if (edad < 12) {
+  precioEntrada = 5;
+} else if (edad <= 17) {
+  // Solo llega aquí si es 12 o más.
+  precioEntrada = 8;
+} else if (edad <= 64) {
+  // Solo llega aquí si es 18 o más.
+  precioEntrada = 12;
+} else {
+  // Solo llega aquí si es 65 o más.
+  precioEntrada = 6;
+}
+
+console.log(`La edad es ${edad} años. El precio de la entrada es: $${precioEntrada}`);</code></pre>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">Troubleshooting</h2>
+                
+                <!-- Error 1: Asignación en el if -->
+                <div class="mb-6 bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+                    <h3 class="text-lg font-semibold text-red-800 mb-3">
+                        El error de asignación en el if
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-gray-700 mb-2"><strong>❌ Error:</strong></p>
+                            <code class="bg-white px-3 py-2 rounded text-sm block">if (vida = 0) { ... }</code>
+                        </div>
+                        <div>
+                            <p class="text-gray-700 mb-2"><strong>📝 Explicación:</strong></p>
+                            <p class="text-gray-700">Un solo igual <code class="bg-white px-2 py-1 rounded text-sm">=</code> asigna. Estás forzando a que <code class="bg-white px-2 py-1 rounded text-sm">vida</code> sea <code class="bg-white px-2 py-1 rounded text-sm">0</code>.</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-700 mb-2"><strong>✅ Solución:</strong></p>
+                            <p class="text-gray-700">Siempre usa <code class="bg-white px-2 py-1 rounded text-sm">===</code> (triple igual) para comparar.</p>
+                            <code class="bg-white px-3 py-2 rounded text-sm block mt-2">if (vida === 0)</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error 2: Olvidar el break -->
+                <div class="mb-6 bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-500">
+                    <h3 class="text-lg font-semibold text-yellow-800 mb-3">
+                        Olvidar el break en el switch
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-gray-700 mb-2"><strong>🐛 Síntoma:</strong></p>
+                            <p class="text-gray-700">El código ejecuta el caso correcto, ¡pero también todos los que están debajo!</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-700 mb-2"><strong>✅ Solución:</strong></p>
+                            <p class="text-gray-700">Revisa que cada <code class="bg-white px-2 py-1 rounded text-sm">case</code> termine con <code class="bg-white px-2 py-1 rounded text-sm">break;</code>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error 3: Confusión de Tipos -->
+                <div class="mb-6 bg-purple-50 p-6 rounded-lg border-l-4 border-purple-500">
+                    <h3 class="text-lg font-semibold text-purple-800 mb-3">
+                         Confusión de Tipos
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-gray-700 mb-2"><strong>❌ Error:</strong></p>
+                            <code class="bg-white px-3 py-2 rounded text-sm block">if (edad === "18")</code>
+                            <p class="text-gray-600 text-sm mt-1">cuando <code class="bg-white px-2 py-1 rounded text-sm">edad</code> es un número <code class="bg-white px-2 py-1 rounded text-sm">18</code>.</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-700 mb-2"><strong>✅ Solución:</strong></p>
+                            <p class="text-gray-700">Recuerda que <code class="bg-white px-2 py-1 rounded text-sm">===</code> revisa valor Y tipo. Convierte tus inputs o asegúrate de usar el tipo correcto.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">Ejercicio Independiente</h2>
+                
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-lg border-2 border-indigo-300 shadow-lg">
+                    <h3 class="text-2xl font-bold text-indigo-900 mb-4">
+                        Calculadora de Costo de Envío E-Commerce
+                    </h3>
+                    
+                    <div class="bg-white p-5 rounded-lg mb-5 shadow-sm">
+                        <p class="text-gray-800 font-semibold mb-3">Descripción:</p>
+                        <p class="text-gray-700">
+                            Vas a simular la lógica de envíos de Amazon. Debes calcular el costo de envío basándote en dos variables: <code class="bg-gray-100 px-2 py-1 rounded text-sm">destino</code> (Nacional o Internacional) y <code class="bg-gray-100 px-2 py-1 rounded text-sm">peso</code> (en kg).
+                        </p>
+                    </div>
+                    
+                    <div class="bg-indigo-100 p-5 rounded-lg mb-5 border-l-4 border-indigo-600">
+                        <p class="text-gray-800 font-semibold mb-3">Reglas de Negocio:</p>
+                        <ol class="list-decimal list-inside space-y-3 text-gray-700 ml-2">
+                            <li>
+                                <strong>Si el destino es "Nacional":</strong>
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li>Peso &lt; 5kg: Costo $10.</li>
+                                    <li>Peso &gt;= 5kg: Costo $20.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Si el destino es "Internacional":</strong>
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li>Peso &lt; 5kg: Costo $30.</li>
+                                    <li>Peso &gt;= 5kg: Costo $50.</li>
+                                </ul>
+                            </li>
+                            <li>Crea las variables <code class="bg-white px-2 py-1 rounded text-sm">destino</code> y <code class="bg-white px-2 py-1 rounded text-sm">peso</code>.</li>
+                            <li>Usa <code class="bg-white px-2 py-1 rounded text-sm">if</code> anidados o lógica <code class="bg-white px-2 py-1 rounded text-sm">&&</code> para determinar el costo.</li>
+                            <li>Imprime: <code class="bg-white px-2 py-1 rounded text-sm text-xs">"El envío a destino [Destino] con peso [Peso]kg cuesta $[Costo]"</code>.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="bg-green-50 p-5 rounded-lg border border-green-300">
+                        <p class="text-gray-800 font-semibold mb-3">✅ Criterios de logro:</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 ml-2">
+                            <li>Uso correcto de comparadores.</li>
+                            <li>Lógica anidada o compuesta funcional.</li>
+                            <li>Mensaje final dinámico con Template Literals.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-5 bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                        <p class="text-gray-800 text-sm">
+                            <strong>Consejo:</strong> Piensa en cómo estructurar tus condicionales. ¿Prefieres revisar primero el destino y luego el peso, o al revés? Ambas formas pueden funcionar.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">¿Debería Saber Algo Más?</h2>
+                
+                <!-- Short-circuiting -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4">
+                        "Short-circuiting" (Cortocircuito) con <code class="bg-gray-100 px-2 py-1 rounded text-sm">&&</code> y <code class="bg-gray-100 px-2 py-1 rounded text-sm">||</code>
+                    </h3>
+                    
+                    <div class="bg-indigo-50 p-5 rounded-lg border-l-4 border-indigo-500 mb-4">
+                        <p class="text-gray-700 mb-4">
+                            Los operadores lógicos <code class="bg-white px-2 py-1 rounded text-sm">&&</code> y <code class="bg-white px-2 py-1 rounded text-sm">||</code> no siempre devuelven <code class="bg-white px-2 py-1 rounded text-sm">true</code> o <code class="bg-white px-2 py-1 rounded text-sm">false</code>. Tienen un comportamiento especial:
+                        </p>
+                        
+                        <ul class="space-y-3 text-gray-700">
+                            <li>
+                                <code class="bg-white px-2 py-1 rounded text-sm">A || B</code>: Evalúa <code class="bg-white px-2 py-1 rounded text-sm">A</code>. Si <code class="bg-white px-2 py-1 rounded text-sm">A</code> es truthy, devuelve <code class="bg-white px-2 py-1 rounded text-sm">A</code> y nunca evalúa <code class="bg-white px-2 py-1 rounded text-sm">B</code>. Si <code class="bg-white px-2 py-1 rounded text-sm">A</code> es falsy, devuelve <code class="bg-white px-2 py-1 rounded text-sm">B</code>.
+                            </li>
+                            <li>
+                                <code class="bg-white px-2 py-1 rounded text-sm">A && B</code>: Evalúa <code class="bg-white px-2 py-1 rounded text-sm">A</code>. Si <code class="bg-white px-2 py-1 rounded text-sm">A</code> es falsy, devuelve <code class="bg-white px-2 py-1 rounded text-sm">A</code> y nunca evalúa <code class="bg-white px-2 py-1 rounded text-sm">B</code>. Si <code class="bg-white px-2 py-1 rounded text-sm">A</code> es truthy, devuelve <code class="bg-white px-2 py-1 rounded text-sm">B</code>.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Nullish Coalescing Operator -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-purple-800 mb-4">
+                        El Operador "Nullish Coalescing" (<code class="bg-gray-100 px-2 py-1 rounded text-sm">??</code>) <span class="text-sm bg-purple-200 text-purple-800 px-2 py-1 rounded">(ES2020 - Avanzado)</span>
+                    </h3>
+                    
+                    <div class="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500 mb-4">
+                        <p class="text-gray-800 font-semibold mb-3">Este es el <code class="bg-white px-2 py-1 rounded text-sm">||</code> moderno y más seguro.</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-gray-700 mb-2"><strong>⚠️ El problema del ||:</strong></p>
+                                <p class="text-gray-700 mb-2">
+                                    Es que reacciona a todos los valores falsy. Si <code class="bg-white px-2 py-1 rounded text-sm">let cantidad = 0;</code> y haces <code class="bg-white px-2 py-1 rounded text-sm">const valor = cantidad || 10;</code>, <code class="bg-white px-2 py-1 rounded text-sm">valor</code> será <code class="bg-white px-2 py-1 rounded text-sm">10</code>, lo cual es un error (<code class="bg-white px-2 py-1 rounded text-sm">0</code> era un valor válido).
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <p class="text-gray-700 mb-2"><strong>✅ La solución con ??:</strong></p>
+                                <p class="text-gray-700">
+                                    El <code class="bg-white px-2 py-1 rounded text-sm">??</code> (Nullish Coalescing Operator) solo reacciona a <code class="bg-white px-2 py-1 rounded text-sm">null</code> o <code class="bg-white px-2 py-1 rounded text-sm">undefined</code>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-purple-100 to-pink-100 p-4 rounded-lg border border-purple-300">
+                        <p class="text-gray-800 font-semibold">
+                            Regla moderna: Usa <code class="bg-white px-2 py-1 rounded text-sm">??</code> para valores por defecto, a menos que específicamente quieras tratar <code class="bg-white px-2 py-1 rounded text-sm">0</code> y <code class="bg-white px-2 py-1 rounded text-sm">""</code> como inválidos.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            
+            
+
+
+            <footer class="mt-16 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
+                <img src="src/logo.png" class="h-8 mx-auto mb-3 opacity-50 grayscale invert">
+
+                <p>Docente Desarrollador: <strong>Santiago Yosa González</strong></p>
+            </footer>
+
         </div>
-
-        <footer class="mt-16 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
-            <img src="src/logo.png" class="h-8 mx-auto mb-3 opacity-50 grayscale invert">
-            <p>Docente Desarrollador: <strong>Santiago Yosa González</strong></p>
-        </footer>
-
     </main>
 
     <script>
         const menuBtn = document.getElementById('menu-btn');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
+        const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+        const mainContent = document.getElementById('main-content');
+        const menuIcon = document.getElementById('menu-icon');
+        const contentContainer = document.getElementById('content-container');
 
+        // Toggle para móvil
         function toggleMenu() {
-            // Alternar clase para mover el sidebar
             if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full'); // Mostrar
-                overlay.classList.remove('hidden'); // Mostrar fondo oscuro
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
             } else {
-                sidebar.classList.add('-translate-x-full'); // Ocultar
-                overlay.classList.add('hidden'); // Ocultar fondo oscuro
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // Toggle para desktop
+        function toggleSidebarDesktop() {
+            if (sidebar.classList.contains('sidebar-visible')) {
+                // Ocultar sidebar
+                sidebar.classList.remove('sidebar-visible');
+                sidebar.classList.add('sidebar-hidden');
+                toggleSidebarBtn.classList.remove('btn-with-sidebar');
+                toggleSidebarBtn.classList.add('btn-without-sidebar');
+                // Expandir contenido
+                contentContainer.classList.remove('normal');
+                contentContainer.classList.add('expanded');
+                // Cambiar ícono a flecha derecha (mostrar)
+                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>';
+            } else {
+                // Mostrar sidebar
+                sidebar.classList.remove('sidebar-hidden');
+                sidebar.classList.add('sidebar-visible');
+                toggleSidebarBtn.classList.remove('btn-without-sidebar');
+                toggleSidebarBtn.classList.add('btn-with-sidebar');
+                // Restaurar contenido normal
+                contentContainer.classList.remove('expanded');
+                contentContainer.classList.add('normal');
+                // Cambiar ícono a flechas izquierda (ocultar)
+                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>';
             }
         }
 
         menuBtn.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu); // Cerrar al hacer clic afuera
+        overlay.addEventListener('click', toggleMenu);
+        toggleSidebarBtn.addEventListener('click', toggleSidebarDesktop);
     </script>
 </body>
 

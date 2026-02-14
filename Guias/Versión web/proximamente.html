@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan de Curso - CESDE</title>
+    <title>Web I</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="icon" href="https://www.cesde.edu.co/wp-content/uploads/2022/11/cropped-favicon-32x32.png" sizes="32x32">
     <script>
         tailwind.config = {
             theme: {
@@ -36,6 +37,33 @@
             scrollbar-width: thin;
             scrollbar-color: #555 #1e1e1e;
         }
+
+        /* Sistema de sidebar para desktop */
+        @media (min-width: 768px) {
+            #sidebar.sidebar-hidden {
+                transform: translateX(-100%) !important;
+            }
+            #sidebar.sidebar-visible {
+                transform: translateX(0) !important;
+            }
+            #toggle-sidebar-btn {
+                transition: left 0.3s ease-in-out;
+            }
+            #toggle-sidebar-btn.btn-with-sidebar {
+                left: 18rem; /* 72 * 4px = 288px = 18rem */
+            }
+            #toggle-sidebar-btn.btn-without-sidebar {
+                left: 1rem;
+            }
+            
+            /* Contenedor de contenido ampliado */
+            .content-container.expanded {
+                max-width: 90% !important;
+            }
+            .content-container.normal {
+                max-width: 56rem; /* max-w-4xl = 896px */
+            }
+        }
     </style>
 </head>
 
@@ -51,7 +79,7 @@
     </header>
 
     <aside id="sidebar"
-        class="bg-cesde-sidebar text-gray-400 w-72 flex-shrink-0 fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40 border-r border-gray-800 flex flex-col h-full">
+        class="bg-cesde-sidebar text-gray-400 w-72 flex-shrink-0 fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40 border-r border-gray-800 flex flex-col h-full sidebar-visible">
 
         <div class="p-6 text-center border-b border-gray-800">
             <img src="src/logo.png" alt="CESDE Logo"
@@ -74,13 +102,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="proximamente.html"
+                    <a href="semana2.html"
                         class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
                         Semana 2: Condicionales
                     </a>
                 </li>
                 <li>
-                    <a href="proximamente.html"
+                    <a href="semana3.html"
                         class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
                         Semana 3: Ciclos
                     </a>
@@ -190,7 +218,15 @@
     </aside>
 
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
-    <main class="flex-1 flex flex-col items-center justify-center p-6 text-center relative w-full h-full bg-white">
+
+    <!-- Botón para ocultar/mostrar sidebar en desktop -->
+    <button id="toggle-sidebar-btn" class="hidden md:block fixed top-4 z-50 bg-cesde-primary text-white p-3 rounded-lg shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-cesde-primary focus:ring-offset-2 btn-with-sidebar">
+        <svg id="menu-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+        </svg>
+    </button>
+
+    <main id="main-content" class="flex-1 flex flex-col items-center justify-center p-6 text-center relative w-full h-full bg-white transition-all duration-300">
 
         <div class="max-w-md w-full animate-float">
             <div class="relative w-32 h-32 mx-auto mb-8">
@@ -228,20 +264,45 @@
         const menuBtn = document.getElementById('menu-btn');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
+        const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+        const mainContent = document.getElementById('main-content');
+        const menuIcon = document.getElementById('menu-icon');
 
+        // Toggle para móvil
         function toggleMenu() {
-            // Alternar clase para mover el sidebar
             if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full'); // Mostrar
-                overlay.classList.remove('hidden'); // Mostrar fondo oscuro
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
             } else {
-                sidebar.classList.add('-translate-x-full'); // Ocultar
-                overlay.classList.add('hidden'); // Ocultar fondo oscuro
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // Toggle para desktop
+        function toggleSidebarDesktop() {
+            if (sidebar.classList.contains('sidebar-visible')) {
+                // Ocultar sidebar
+                sidebar.classList.remove('sidebar-visible');
+                sidebar.classList.add('sidebar-hidden');
+                toggleSidebarBtn.classList.remove('btn-with-sidebar');
+                toggleSidebarBtn.classList.add('btn-without-sidebar');
+                // Cambiar ícono a flecha derecha (mostrar)
+                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>';
+            } else {
+                // Mostrar sidebar
+                sidebar.classList.remove('sidebar-hidden');
+                sidebar.classList.add('sidebar-visible');
+                toggleSidebarBtn.classList.remove('btn-without-sidebar');
+                toggleSidebarBtn.classList.add('btn-with-sidebar');
+                // Cambiar ícono a flechas izquierda (ocultar)
+                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>';
             }
         }
 
         menuBtn.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu); // Cerrar al hacer clic afuera
+        overlay.addEventListener('click', toggleMenu);
+        toggleSidebarBtn.addEventListener('click', toggleSidebarDesktop);
     </script>
 </body>
 

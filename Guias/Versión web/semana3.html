@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wen I</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://www.cesde.edu.co/wp-content/uploads/2022/11/cropped-favicon-32x32.png" sizes="32x32">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        cesde: {
+                            primary: '#D60057', // Magenta Institucional
+                            dark: '#1a1a1a',
+                            sidebar: '#000000',
+                            light: '#f3f4f6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Ajustes finos para scrollbar y código */
+        body {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        pre {
+            scrollbar-width: thin;
+            scrollbar-color: #555 #1e1e1e;
+        }
+
+        /* Sistema de sidebar para desktop */
+        @media (min-width: 768px) {
+            #sidebar.sidebar-hidden {
+                transform: translateX(-100%) !important;
+            }
+
+            #sidebar.sidebar-visible {
+                transform: translateX(0) !important;
+            }
+
+            #toggle-sidebar-btn {
+                transition: left 0.3s ease-in-out;
+            }
+
+            #toggle-sidebar-btn.btn-with-sidebar {
+                left: 18rem;
+                /* 72 * 4px = 288px = 18rem */
+            }
+
+            #toggle-sidebar-btn.btn-without-sidebar {
+                left: 1rem;
+            }
+
+            /* Contenedor de contenido ampliado */
+            .content-container.expanded {
+                max-width: 90% !important;
+            }
+
+            .content-container.normal {
+                max-width: 56rem;
+                /* max-w-4xl = 896px */
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-700 h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <header class="md:hidden bg-black text-white p-4 flex justify-between items-center z-50 shadow-md">
+        <div class="font-bold tracking-wider text-lg">WEB DEV I</div>
+        <button id="menu-btn" class="focus:outline-none text-cesde-primary">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </header>
+
+    <aside id="sidebar"
+        class="bg-cesde-sidebar text-gray-400 w-72 flex-shrink-0 fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40 border-r border-gray-800 flex flex-col h-full sidebar-visible">
+
+        <div class="p-6 text-center border-b border-gray-800">
+            <img src="src/logo.png" alt="CESDE Logo"
+                class="w-32 mx-auto h-auto opacity-90 hover:opacity-100 transition-opacity">
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1">
+                <li>
+                    <a href="index.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Recurso Global
+                    </a>
+                </li>
+
+                <li>
+                    <a href="semana1.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 1: Fundamentos
+                    </a>
+                </li>
+                <li>
+                    <a href="semana2.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 2: Condicionales
+                    </a>
+                </li>
+                <li>
+                    <a href="semana3.html"
+                        class="block py-2 px-6 bg-gray-900 border-l-4 border-cesde-primary text-white font-medium text-sm">
+                        Semana 3: Ciclos
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 4: Funciones
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 5: Funciones
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 6: Momento 1
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 7: Estructuras de datos
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 8: Estructuras de datos
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 9: Manipulación DOM
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 10: Manipulación DOM
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 11: Manipulación DOM
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 12: Momento 2
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 13: Asíncrono
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 13: Asíncrono
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 14: Asíncrono
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 15: Asíncrono
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 16: Asíncrono
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 17: Momento 3
+                    </a>
+                </li>
+                <li>
+                    <a href="proximamente.html"
+                        class="block py-2 px-6 hover:bg-gray-900 hover:text-white border-l-4 border-transparent transition-colors text-sm">
+                        Semana 18: Retroalimentación
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800 text-xs text-center text-gray-600">
+            v1.0.2 - 2026
+        </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
+
+    <!-- Botón para ocultar/mostrar sidebar en desktop -->
+    <button id="toggle-sidebar-btn"
+        class="hidden md:block fixed top-4 z-50 bg-cesde-primary text-white p-3 rounded-lg shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-cesde-primary focus:ring-offset-2 btn-with-sidebar">
+        <svg id="menu-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7">
+            </path>
+        </svg>
+    </button>
+
+    <main id="main-content" class="flex-1 overflow-y-auto w-full relative transition-all duration-300">
+        <div id="content-container"
+            class="content-container normal mx-auto p-6 md:p-10 pb-20 transition-all duration-300">
+
+            <div class="mb-8 border-b pb-4">
+                <small class="text-cesde-primary font-bold tracking-widest uppercase">Unidad I - Generalidades de
+                    Javascript</small>
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2">Semana 3: Ciclos</h1>
+                <p class="text-gray-500 mt-2">Temas: Ciclos en JavaScript: estructuras for, while y do-while.</p>
+            </div>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                    Situación: La App de Café
+                </h2>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        En la sesión anterior, aprendimos a usar <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">if</code> para tomar una decisión. Por
+                        ejemplo, podríamos comprobar si la nota de un estudiante es mayor a 3.0 para saber si aprobó.
+                    </p>
+
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Ahora, ¿qué pasa si tenemos un salón con 40 estudiantes? ¿Escribimos 40 bloques <code
+                            class="bg-gray-200 px-2 py-1 rounded text-sm">if</code> diferentes?
+                    </p>
+
+                    <pre class="bg-gray-200 p-4 rounded-lg text-sm text-gray-800 mb-4 overflow-x-auto"><code>if (estudiante1.nota > 3.0) { ... } 
+if (estudiante2.nota > 3.0) { ... } 
+... 
+if (estudiante40.nota > 3.0) { ... }</code></pre>
+
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Eso es ineficiente, imposible de mantener y viola el principio de <strong>"No Te
+                            Repitas"</strong> (<strong>DRY</strong> - Don't Repeat Yourself).
+                    </p>
+
+                    <div class="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500 mb-4">
+                        <p class="text-gray-800 font-semibold mb-2">
+                            Necesitamos una forma de decirle a JavaScript:
+                        </p>
+                        <p class="text-gray-700 italic">
+                            "Toma esta lista de estudiantes y repite esta misma lógica de <code
+                                class="bg-white px-2 py-1 rounded text-sm">if</code> para cada uno de ellos".
+                        </p>
+                    </div>
+
+                    <p class="text-gray-700 leading-relaxed">
+                        Esa instrucción de "repetir" es un <strong>ciclo</strong> o <strong>bucle</strong>. Los bucles
+                        son el motor de nuestras aplicaciones; son la maquinaria que nos permite procesar miles de datos
+                        con unas pocas líneas de código.
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-cesde-primary pl-4">El Concepto de
+                    Iteración</h2>
+
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 mb-6">
+                    <p class="text-gray-800 font-semibold text-lg">
+                        Un <strong>ciclo</strong> (o <strong>bucle</strong>) es una estructura de control que repite un
+                        bloque de código mientras una condición sea verdadera (<code
+                            class="bg-white px-2 py-1 rounded text-sm">true</code>).
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-l-4 border-cesde-primary pl-4">Tipos de Ciclos
+                </h2>
+
+                <!-- El Ciclo for -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-cesde-primary mb-3">El Ciclo for (La Iteración Definida)</h3>
+
+                    <div class="bg-gray-50 p-6 rounded-lg mb-4">
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            El ciclo <code class="bg-gray-200 px-2 py-1 rounded text-sm">for</code> es la estructura de
+                            repetición más común. Se usa cuando sabemos de antemano cuántas veces queremos que se repita
+                            una acción. (Ej. "Repite esto 10 veces", "Repite esto por cada uno de los 40 estudiantes").
+                        </p>
+
+                        <div class="bg-green-50 p-5 rounded-lg border-l-4 border-green-500">
+                            <p class="text-gray-800 font-semibold mb-3">Analogía:</p>
+                            <p class="text-gray-700 mb-3">
+                                Un ciclo <code class="bg-white px-2 py-1 rounded text-sm">for</code> es como un
+                                entrenador que te dice: <strong>"Corre 5 vueltas a la pista"</strong>.
+                            </p>
+
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700 ml-2">
+                                <li><strong>Punto de Partida:</strong> Empiezas en la vuelta 0 (o 1).</li>
+                                <li><strong>Condición para Seguir:</strong> ¿Has corrido menos de 5 vueltas? Si es sí,
+                                    sigue corriendo.</li>
+                                <li><strong>Acción por Vuelta:</strong> Al final de cada vuelta, anotas 1 vuelta más en
+                                    tu contador.</li>
+                            </ol>
+                        </div>
+
+                        <h4 class="text-lg font-semibold text-gray-800 mb-3 mt-6">Anatomía del Código</h4>
+
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            El <code class="bg-gray-200 px-2 py-1 rounded text-sm">for</code> se define con <strong>tres
+                                partes clave</strong> dentro de los paréntesis, separadas por punto y coma: <code
+                                class="bg-gray-200 px-2 py-1 rounded text-sm">for (inicialización; condición; incremento) { ... }</code>
+                        </p>
+
+                        <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4"><code>// Este ciclo imprimirá los números del 0 al 4
+for (let i = 0; i < 5; i++) {
+  console.log('El número es: ' + i);
+}</code></pre>
+
+                        <div class="space-y-3 mb-4">
+                            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                                <p class="text-gray-800">
+                                    <strong>1. <code class="bg-white px-2 py-1 rounded text-sm">let i = 0;</code> (La
+                                        Inicialización):</strong> Es el "Punto de Partida". Creamos una variable
+                                    (¡usando <code class="bg-white px-2 py-1 rounded text-sm">let</code>!) que actuará
+                                    como nuestro contador. Esto solo se ejecuta una vez al inicio.
+                                </p>
+                            </div>
+
+                            <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                                <p class="text-gray-800">
+                                    <strong>2. <code class="bg-white px-2 py-1 rounded text-sm">i &lt; 5;</code> (La
+                                        Condición):</strong> Es la "Regla para Continuar". Antes de cada vuelta,
+                                    JavaScript revisa esta condición. Si es <code
+                                        class="bg-white px-2 py-1 rounded text-sm">true</code>, ejecuta el bloque de
+                                    código. Si es <code class="bg-white px-2 py-1 rounded text-sm">false</code>, el
+                                    ciclo se detiene.
+                                </p>
+                            </div>
+
+                            <div class="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500">
+                                <p class="text-gray-800">
+                                    <strong>3. <code class="bg-white px-2 py-1 rounded text-sm">i++</code> (El
+                                        Incremento):</strong> Es el "Paso". Se ejecuta después de cada vuelta. <code
+                                        class="bg-white px-2 py-1 rounded text-sm">i++</code> (de la Sesión 1) suma 1 a
+                                    nuestro contador, acercándonos al final.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300">
+                            <p class="text-gray-800 font-semibold mb-2">Profundización</p>
+                            <p class="text-gray-700">
+                                <strong>¿Por qué <code class="bg-white px-2 py-1 rounded text-sm">let</code> y no <code
+                                        class="bg-white px-2 py-1 rounded text-sm">var</code>?</strong> Si usáramos
+                                <code class="bg-white px-2 py-1 rounded text-sm">var i</code>, esa variable <code
+                                    class="bg-white px-2 py-1 rounded text-sm">i</code> se "fugaría" del ciclo y
+                                existiría en todo nuestro código, pudiendo causar errores. Al usar <code
+                                    class="bg-white px-2 py-1 rounded text-sm">let i</code>, la variable <code
+                                    class="bg-white px-2 py-1 rounded text-sm">i</code> solo existe dentro del bloque
+                                <code class="bg-white px-2 py-1 rounded text-sm">{...}</code> del ciclo, lo cual es
+                                mucho más seguro y predecible.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION: El Ciclo while -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-8 rounded-lg border-2 border-blue-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                        El Ciclo <code class="bg-white px-2 py-1 rounded">while</code>
+                    </h2>
+
+                    <p class="text-gray-700 mb-6 text-lg">
+                        Usamos un <code class="bg-white px-2 py-1 rounded text-sm">while</code> cuando no sabemos
+                        cuántas veces necesitamos repetir. La repetición no depende de un contador, sino de que una
+                        condición externa siga siendo verdadera.
+                    </p>
+
+                    <div class="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500 mb-6">
+                        <p class="text-gray-800 mb-2">
+                            <strong> Ejemplo de la vida real:</strong> Mientras el jugador tenga vidas (vidas > 0),
+                            sigue jugando. No sabes si el juego durará 1 minuto o 3 horas. El ciclo continúa mientras la
+                            condición se cumpla.
+                        </p>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-600 mb-6">
+                        <p class="text-gray-800 font-bold text-lg mb-3">
+                            ¡Peligro! El Bucle Infinito
+                        </p>
+                        <p class="text-gray-700 mb-2">
+                            El <code class="bg-white px-2 py-1 rounded text-sm">while</code> es poderoso pero peligroso.
+                            Si la condición nunca se vuelve <code
+                                class="bg-white px-2 py-1 rounded text-sm">false</code>, el código se repetirá para
+                            siempre, congelando el navegador. <strong>Algo dentro del while debe, eventualmente, cambiar
+                                la condición.</strong>
+                        </p>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                        <p class="text-gray-800 font-semibold mb-4"> Anatomía del Código</p>
+                        <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>let vidas = 3;
+
+while (vidas > 0) {
+  console.log(`¡Tienes ${vidas} vidas!`);
+  
+  // Simulamos que el jugador pierde una vida
+  // ESTA LÍNEA ES CRUCIAL. Modifica la condición.
+  vidas--; // Sin esto, sería un bucle infinito.
+}
+
+console.log('Game Over');</code></pre>
+                        <p class="text-gray-700 mt-3"><strong>Salida:</strong></p>
+                        <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800">¡Tienes 3 vidas!
+¡Tienes 2 vidas!
+¡Tienes 1 vidas!
+Game Over</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: El Ciclo do...while -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-8 rounded-lg border-2 border-green-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                        El Ciclo <code class="bg-white px-2 py-1 rounded">do...while</code>
+                    </h2>
+
+                    <p class="text-gray-700 mb-6 text-lg">
+                        Es casi idéntico al <code class="bg-white px-2 py-1 rounded text-sm">while</code>, con una sola
+                        diferencia crucial: el <code class="bg-white px-2 py-1 rounded text-sm">do...while</code>
+                        siempre se ejecuta <strong>al menos una vez</strong>.
+                    </p>
+
+                    <div class="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500 mb-6">
+                        <p class="text-gray-800 mb-2">
+                            <strong> Caso de uso:</strong> Un menú de opciones donde primero muestras el menú y luego
+                            preguntas si quiere pedir algo del menú.
+                        </p>
+                        <p class="text-gray-700">
+                            Se usa en situaciones donde necesitas que el código se ejecute una vez antes de comprobar si
+                            debe repetirse.
+                        </p>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-300 mb-6">
+                        <p class="text-gray-800 font-semibold mb-4"> Anatomía del Código</p>
+                        <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>let contrasena;
+
+do {
+  // Este bloque se ejecuta SIEMPRE al menos una vez
+  contrasena = prompt('Introduce tu contraseña:'); 
+} while (contrasena !== '12345'); // La condición se revisa DESPUÉS
+
+console.log('¡Bienvenido!');</code></pre>
+                    </div>
+
+                    <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300">
+                        <p class="text-gray-800 font-semibold mb-3"> Diferencia Clave: while vs do...while</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded border-l-4 border-red-500">
+                                <p class="font-semibold text-red-600 mb-2">while: Pregunta PRIMERO</p>
+                                <pre class="bg-gray-900 text-green-400 p-3 rounded text-xs overflow-x-auto"><code>let x = 0;
+while (x > 5) {
+  console.log(x);
+}
+// No imprime nada
+// porque 0 > 5 es false</code></pre>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-green-600">
+                                <p class="font-semibold text-green-600 mb-2">do...while: Actúa PRIMERO</p>
+                                <pre class="bg-gray-900 text-green-400 p-3 rounded text-xs overflow-x-auto"><code>let y = 0;
+do {
+  console.log(y);
+} while (y > 5);
+// Imprime 0
+// Ejecuta antes de
+// revisar la condición</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: El Bucle for...of -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-orange-50 to-amber-50 p-8 rounded-lg border-2 border-orange-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                        El Bucle <code class="bg-white px-2 py-1 rounded">for...of</code>
+                    </h2>
+
+                    <p class="text-gray-700 mb-6 text-lg">
+                        Este es el sucesor moderno del ciclo <code class="bg-white px-2 py-1 rounded text-sm">for</code>
+                        clásico cuando quieres recorrer un Arreglo. Es mucho más limpio y menos propenso a errores.
+                    </p>
+
+                    <div class="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500 mb-6">
+                        <p class="text-gray-800 font-semibold mb-2">Para qué sirve:</p>
+                        <p class="text-gray-700">
+                            Para iterar sobre los <strong>valores de un objeto "iterable"</strong> (como un Arreglo, un
+                            String, un Mapa, etc.).
+                        </p>
+                    </div>
+
+                    <div class="bg-purple-50 p-6 rounded-lg border border-purple-300 mb-6">
+                        <p class="text-gray-800 font-semibold mb-4"> Casos de Uso</p>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded border-l-4 border-purple-500">
+                                <p class="font-semibold text-purple-700 mb-2"> Ciclo for (clásico):</p>
+                                <p class="text-gray-700">
+                                    Eres un repartidor al que le dicen: "Ve a la casa #0, luego a la casa #1, luego a la
+                                    #2...". Te importa mucho el índice (el número de la casa).
+                                </p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-orange-500">
+                                <p class="font-semibold text-orange-700 mb-2"> Ciclo for...of:</p>
+                                <p class="text-gray-700">
+                                    Eres un repartidor al que le dan una lista de clientes. Vas al "cliente A", luego al
+                                    "cliente B". No te importa si son la casa #0 o la #1 (índice), solo te importa el
+                                    valor (el cliente).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-300 mb-6">
+                        <p class="text-gray-800 font-semibold mb-4"> Anatomía del Código:</p>
+                        <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>const miArray = ['manzana', 'banana', 'naranja'];
+
+// El 'for...of'
+for (const fruta of miArray) {
+  // 'fruta' toma el VALOR de cada elemento en cada vuelta
+  console.log(fruta);
+}
+
+// Resultado:
+// "manzana"
+// "banana"
+// "naranja"</code></pre>
+                    </div>
+
+                    <div class="bg-green-50 p-5 rounded-lg border border-green-300">
+                        <p class="text-gray-800 font-semibold mb-3"> Cuándo usarlo:</p>
+                        <p class="text-gray-700">
+                            Es la forma preferida y moderna de recorrer un arreglo cuando solo te importa el
+                            <strong>valor de cada elemento</strong> y no necesitas saber su posición (el índice <code
+                                class="bg-white px-2 py-1 rounded text-sm">i</code>).
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: El Bucle for...in -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-indigo-50 to-blue-50 p-8 rounded-lg border-2 border-indigo-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                        El Bucle <code class="bg-white px-2 py-1 rounded">for...in</code> - El Iterador de Propiedades
+                        de Objetos
+                    </h2>
+
+                    <p class="text-gray-700 mb-6 text-lg">
+                        Este bucle se ve similar al <code class="bg-white px-2 py-1 rounded text-sm">for...of</code>,
+                        pero es <strong>fundamentalmente diferente</strong> y es una fuente común de confusión.
+                    </p>
+
+                    <div class="bg-blue-50 p-5 rounded-lg border-l-4 border-blue-500 mb-6">
+                        <p class="text-gray-800 font-semibold mb-2">Para qué sirve:</p>
+                        <p class="text-gray-700">
+                            Para iterar sobre las <strong>propiedades (las "claves" o keys) de un Objeto</strong>.
+                        </p>
+                    </div>
+
+                    <div class="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500 mb-6">
+                        <p class="text-gray-800 font-semibold mb-2"> Forma de Pensar:</p>
+                        <p class="text-gray-700">
+                            A este bucle no le importa quién vive en la casa (valor), le importa el nombre de las
+                            habitaciones (clave). Si le das un objeto persona, te dirá que tiene una habitación
+                            "nombre", una "edad" y una "profesión".
+                        </p>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-600 mb-6">
+                        <p class="text-gray-800 font-bold text-lg mb-3">
+                            ¡Advertencia Importante!
+                        </p>
+                        <p class="text-gray-700 mb-3">
+                            Nunca uses <code class="bg-white px-2 py-1 rounded text-sm">for...in</code> para recorrer un
+                            Arreglo. Técnicamente "funciona", pero lo hará de forma incorrecta:
+                        </p>
+                        <ol class="text-gray-700 list-decimal list-inside ml-2 space-y-2">
+                            <li>Iterará sobre los índices ('0', '1', '2') como si fueran strings, no sobre los valores.
+                            </li>
+                            <li>Puede iterar sobre propiedades inesperadas que no son parte de los datos.</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300 mb-6">
+                        <p class="text-gray-800 font-semibold mb-3"> Resumen de la Diferencia:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-3 rounded border-l-4 border-orange-500">
+                                <p class="font-semibold text-orange-700"><code
+                                        class="bg-white px-2 py-1 rounded text-xs">for...of</code></p>
+                                <p class="text-gray-700 text-sm">Para <strong>valores de Arreglos</strong></p>
+                            </div>
+                            <div class="bg-white p-3 rounded border-l-4 border-indigo-500">
+                                <p class="font-semibold text-indigo-700"><code
+                                        class="bg-white px-2 py-1 rounded text-xs">for...in</code></p>
+                                <p class="text-gray-700 text-sm">Para <strong>claves de Objetos</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                        <p class="text-gray-800 font-semibold mb-4"> Anatomía del Código: </p>
+                        <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>const persona = {
+  nombre: 'Ana',
+  edad: 30,
+  profesion: 'Doctora'
+};
+
+// El 'for...in'
+for (const clave in persona) {
+  // 'clave' toma el NOMBRE de la propiedad en cada vuelta
+  console.log(clave); // 'nombre', 'edad', 'profesion'
+  
+  // Para ver el valor, debes usar la clave
+  console.log(persona[clave]); // 'Ana', 30, 'Doctora'
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Mención Honorífica forEach -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-pink-50 to-rose-50 p-8 rounded-lg border-2 border-pink-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                        Mención Honorífica: <code class="bg-white px-2 py-1 rounded">.forEach()</code> - El Método de
+                        Array
+                    </h2>
+
+                    <p class="text-gray-700 mb-6 text-lg">
+                        No es un "bucle" en el sentido de una sentencia de JavaScript, sino un <strong>método que tienen
+                            los arreglos</strong>. Es la forma "funcional" de hacer un <code
+                            class="bg-white px-2 py-1 rounded text-sm">for...of</code>.
+                    </p>
+
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                        <p class="text-gray-800 font-semibold mb-4"> Anatomía del Código:</p>
+                        <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>const miArray = ['manzana', 'banana', 'naranja'];
+
+// El .forEach() recibe una función callback
+miArray.forEach(function(fruta) {
+  console.log(fruta);
+});</code></pre>
+                        <p class="text-gray-700 mt-3"><strong>Salida:</strong></p>
+                        <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800">manzana
+banana
+naranja</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Control de Ciclos -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-red-50 to-orange-50 p-8 rounded-lg border-2 border-red-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                        Control de Ciclos: <code class="bg-white px-2 py-1 rounded">break</code> y <code
+                            class="bg-white px-2 py-1 rounded">continue</code>
+                    </h2>
+
+                    <p class="text-gray-700 mb-6 text-lg">
+                        A veces necesitamos alterar el flujo normal de un ciclo.
+                    </p>
+
+                    <!-- break -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-red-700 mb-4">
+                            <code class="bg-white px-2 py-1 rounded text-sm">break</code> (La Salida de Emergencia)
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Termina el ciclo inmediatamente, sin importar si la condición se sigue cumpliendo.
+                        </p>
+
+                        <div class="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500 mb-4">
+                            <p class="text-gray-800 font-semibold mb-2"> Ejemplo de Uso:</p>
+                            <p class="text-gray-700">
+                                Estoy buscando un nombre en una lista de 1000. Lo encontré en la posición 50. ¡No
+                                necesito revisar los 950 restantes! ¡<code
+                                    class="bg-white px-2 py-1 rounded text-sm">break</code>!
+                            </p>
+                        </div>
+
+                        <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                            <p class="text-gray-800 font-semibold mb-4"> Ejemplo Práctico:</p>
+                            <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>const numeros = [2, 4, 6, 8, 10, 15, 20];
+let encontrado = false;
+
+for (let i = 0; i < numeros.length; i++) {
+  if (numeros[i] === 15) {
+    console.log("¡Encontré el 15 en posición " + i);
+    encontrado = true;
+    break; // Sale del for inmediatamente
+  }
+}
+
+console.log("Búsqueda terminada");</code></pre>
+                            <p class="text-gray-700 mt-3"><strong>Salida:</strong></p>
+                            <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800">¡Encontré el 15 en posición 5
+Búsqueda terminada</pre>
+                        </div>
+                    </div>
+
+                    <!-- continue -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-orange-700 mb-4">
+                            <code class="bg-white px-2 py-1 rounded text-sm">continue</code> (Saltar esta Vuelta)
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Detiene la iteración actual y salta directamente a la siguiente (al <code
+                                class="bg-white px-2 py-1 rounded text-sm">i++</code> en un <code
+                                class="bg-white px-2 py-1 rounded text-sm">for</code>).
+                        </p>
+
+                        <div class="bg-purple-50 p-5 rounded-lg border-l-4 border-purple-500 mb-4">
+                            <p class="text-gray-800 font-semibold mb-2"> Ejemplo de Uso:</p>
+                            <p class="text-gray-700">
+                                Estoy procesando 100 emails. El email actual es spam. No lo proceso (<code
+                                    class="bg-white px-2 py-1 rounded text-sm">continue</code>) y salto al siguiente
+                                email.
+                            </p>
+                        </div>
+
+                        <div class="bg-blue-50 p-6 rounded-lg border border-blue-300 mb-6">
+                            <p class="text-gray-800 font-semibold mb-4"> Ejemplo Práctico:</p>
+                            <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>for (let i = 1; i <= 10; i++) {
+  // Si es el número 5, lo saltamos
+  if (i === 5) {
+    continue; // Salta a la siguiente iteración
+  }
+  console.log("Número: " + i);
+}</code></pre>
+                            <p class="text-gray-700 mt-3"><strong>Salida:</strong></p>
+                            <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800">Número: 1
+Número: 2
+Número: 3
+Número: 4
+Número: 6
+Número: 7
+Número: 8
+Número: 9
+Número: 10</pre>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300">
+                        <p class="text-gray-800 font-semibold mb-3"> Comparación Rápida:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded border-l-4 border-red-500">
+                                <p class="font-semibold text-red-700 mb-2"><code
+                                        class="bg-white px-2 py-1 rounded text-sm">break</code></p>
+                                <p class="text-gray-700 text-sm">Termina el ciclo completo. Continúa después del ciclo.
+                                </p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-orange-500">
+                                <p class="font-semibold text-orange-700 mb-2"><code
+                                        class="bg-white px-2 py-1 rounded text-sm">continue</code></p>
+                                <p class="text-gray-700 text-sm">Salta esta iteración. El ciclo continúa.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Preguntas Frecuentes -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-teal-50 to-cyan-50 p-8 rounded-lg border-2 border-teal-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                        Preguntas Frecuentes
+                    </h2>
+
+                    <!-- Pregunta 1 -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-teal-700 mb-3">
+                            1. ¿Cuál es la diferencia real entre <code
+                                class="bg-white px-2 py-1 rounded text-sm">for</code> y <code
+                                class="bg-white px-2 py-1 rounded text-sm">while</code>?
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Es la pregunta más importante. <strong>Usa <code
+                                    class="bg-white px-2 py-1 rounded text-sm">for</code></strong> cuando tengas una
+                            iteración definida (sabes cuántas veces, ej: 10 vueltas, o una vez por cada elemento de una
+                            lista). <strong>Usa <code class="bg-white px-2 py-1 rounded text-sm">while</code></strong>
+                            cuando tengas una iteración indefinida (no sabes cuántas veces, ej: "hasta que el usuario
+                            escriba 'salir'", "mientras el jugador tenga vidas").
+                        </p>
+                        <div
+                            class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border-l-4 border-blue-500">
+                            <p class="text-gray-700 text-sm">
+                                <strong>Resumen:</strong> <code class="bg-white px-2 py-1 rounded text-xs">for</code> =
+                                conoces el final. <code class="bg-white px-2 py-1 rounded text-xs">while</code> = no
+                                conoces el final.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-teal-700 mb-3">
+                            2. Mi navegador se congeló cuando usé un <code
+                                class="bg-white px-2 py-1 rounded text-sm">while</code>. ¿Qué pasó?
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Creaste un <strong>bucle infinito</strong>. Esto sucede cuando la condición de tu <code
+                                class="bg-white px-2 py-1 rounded text-sm">while</code> empieza siendo <code
+                                class="bg-white px-2 py-1 rounded text-sm">true</code> y nada dentro del bucle hace que
+                            se vuelva <code class="bg-white px-2 py-1 rounded text-sm">false</code>.
+                        </p>
+                        <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500 mb-3">
+                            <p class="text-gray-700 font-semibold text-sm mb-2">❌ Ejemplo incorrecto (bucle infinito):
+                            </p>
+                            <pre class="bg-gray-900 text-red-400 p-3 rounded overflow-x-auto text-xs"><code>let i = 0;
+while (i < 10) {
+  console.log(i);
+  // ¡La variable i nunca cambia!
+  // Siempre será 0, por lo que 0 < 10 siempre es true
+}</code></pre>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                            <p class="text-gray-700 font-semibold text-sm mb-2">✅ Solución (incrementa la variable):</p>
+                            <pre class="bg-gray-900 text-green-400 p-3 rounded overflow-x-auto text-xs"><code>let i = 0;
+while (i < 10) {
+  console.log(i);
+  i++; // ¡Incrementa la variable!
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 3 -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-teal-700 mb-3">
+                            3. ¿Por qué siempre se usa la variable <code
+                                class="bg-white px-2 py-1 rounded text-sm">i</code>?
+                        </h3>
+                        <p class="text-gray-700 mb-3">
+                            Es una <strong>convención histórica</strong> que viene de "Índice" o "Iterador". Si tienes
+                            ciclos anidados (uno dentro de otro), se suele usar <code
+                                class="bg-white px-2 py-1 rounded text-sm">j</code>, luego <code
+                                class="bg-white px-2 py-1 rounded text-sm">k</code>.
+                        </p>
+                        <p class="text-gray-700 mb-3">
+                            Sin embargo, puedes llamarla como quieras (<code
+                                class="bg-white px-2 py-1 rounded text-sm">contador</code>, <code
+                                class="bg-white px-2 py-1 rounded text-sm">numero</code>, <code
+                                class="bg-white px-2 py-1 rounded text-sm">vuelta</code>, etc.), pero <code
+                                class="bg-white px-2 py-1 rounded text-sm">i</code> es el estándar universal.
+                        </p>
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-300">
+                            <p class="text-gray-700 font-semibold text-sm mb-3"> Ejemplo de ciclos anidados (usa i, j):
+                            </p>
+                            <pre class="bg-gray-900 text-green-400 p-3 rounded overflow-x-auto text-xs"><code>// Ciclos anidados: tablas de multiplicar
+for (let i = 1; i <= 3; i++) {
+  for (let j = 1; j <= 3; j++) {
+    console.log(i + " × " + j + " = " + (i * j));
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Ejemplos Prácticos -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-violet-50 to-purple-50 p-8 rounded-lg border-2 border-violet-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                        Ejemplos Prácticos de Ciclos
+                    </h2>
+
+                    <!-- Ejemplo 1 -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-violet-700 mb-4">
+                            Ejemplo 1: La Tabla de Multiplicar (for)
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Vamos a imprimir la tabla de multiplicar del 7:
+                        </p>
+
+                        <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                            <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>const numeroBase = 7;
+console.log(`--- Tabla del ${numeroBase} ---`);
+
+for (let i = 1; i <= 10; i++) {
+    let resultado = numeroBase * i;
+    console.log(`${numeroBase} x ${i} = ${resultado}`);
+}</code></pre>
+                            <p class="text-gray-700 mt-3"><strong>Salida:</strong></p>
+                            <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800">--- Tabla del 7 ---
+7 x 1 = 7
+7 x 2 = 14
+7 x 3 = 21
+7 x 4 = 28
+7 x 5 = 35
+7 x 6 = 42
+7 x 7 = 49
+7 x 8 = 56
+7 x 9 = 63
+7 x 10 = 70</pre>
+                        </div>
+                    </div>
+
+                    <!-- Ejemplo 2 -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-violet-700 mb-4">
+                            Ejemplo 2: El Buscador de Números Pares (while + if)
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Vamos a buscar el primer número par mayor a 100 generado aleatoriamente:
+                        </p>
+
+                        <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                            <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>let encontrado = false;
+let intentos = 0;
+
+while (!encontrado) {
+    // Generamos un número al azar entre 90 y 110
+    let numeroRandom = Math.floor(Math.random() * (110 - 90 + 1) + 90);
+    intentos++;
+    
+    console.log(`Intento ${intentos}: Salió el ${numeroRandom}`);
+
+    if (numeroRandom > 100 && numeroRandom % 2 === 0) {
+        console.log(`¡Encontrado! El ${numeroRandom} es mayor a 100 y par.`);
+        encontrado = true; // Esto detendrá el ciclo
+    }
+}</code></pre>
+                            <p class="text-gray-700 mt-3"><strong>Salida (ejemplo, puede variar):</strong></p>
+                            <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800">Intento 1: Salió el 95
+Intento 2: Salió el 103
+Intento 3: Salió el 98
+Intento 4: Salió el 102
+¡Encontrado! El 102 es mayor a 100 y par.</pre>
+                        </div>
+
+                        <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300">
+                            <p class="text-gray-800 font-semibold mb-2"> Conceptos utilizados:</p>
+                            <ul class="text-gray-700 list-disc list-inside space-y-1 text-sm">
+                                <li><code class="bg-white px-2 py-1 rounded text-xs">while</code>: Repetimos hasta
+                                    encontrar el número</li>
+                                <li><code class="bg-white px-2 py-1 rounded text-xs">if</code>: Verificamos si es par y
+                                    mayor a 100</li>
+                                <li><code class="bg-white px-2 py-1 rounded text-xs">Math.random()</code>: Generamos
+                                    números aleatorios</li>
+                                <li><code class="bg-white px-2 py-1 rounded text-xs">%</code> (módulo): <code
+                                        class="bg-white px-2 py-1 rounded text-xs">% 2 === 0</code> verifica si es par
+                                </li>
+                                <li><code class="bg-white px-2 py-1 rounded text-xs">encontrado = true</code>: Detiene
+                                    el ciclo</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Práctica Acompañada -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-green-50 to-lime-50 p-8 rounded-lg border-2 border-green-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                        Práctica Acompañada
+                    </h2>
+
+                    <!-- Misión -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-green-700 mb-4">
+                            Misión
+                        </h3>
+                        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <p class="text-gray-800 font-semibold text-lg mb-2">
+                                Calcular la suma de todos los números del 1 al 100
+                            </p>
+                            <p class="text-gray-700">
+                                (1 + 2 + 3 + ... + 100)
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Pasos -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-green-700 mb-4">
+                            Paso a Paso
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-white p-4 rounded border-l-4 border-green-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-1">1. Abre tu VSC</p>
+                                <p class="text-gray-700 text-sm">Visual Studio Code o tu editor de texto favorito</p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-green-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-1">2. Crea una variable "acumuladora"</p>
+                                <p class="text-gray-700 text-sm">Necesitamos una "caja" para guardar la suma total.
+                                    <code class="bg-yellow-100 px-2 py-1 rounded text-xs">let sumaTotal = 0;</code></p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-green-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-1">3. Configura el ciclo for</p>
+                                <p class="text-gray-700 text-sm">Queremos un ciclo que se ejecute 100 veces, con un
+                                    contador <code class="bg-yellow-100 px-2 py-1 rounded text-xs">i</code> que vaya del
+                                    1 al 100</p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-green-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-1">4. Escribe la lógica del ciclo</p>
+                                <p class="text-gray-700 text-sm">Dentro del <code
+                                        class="bg-yellow-100 px-2 py-1 rounded text-xs">for</code>, toma el valor actual
+                                    de <code class="bg-yellow-100 px-2 py-1 rounded text-xs">sumaTotal</code> y súmale
+                                    el valor actual del contador <code
+                                        class="bg-yellow-100 px-2 py-1 rounded text-xs">i</code></p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-green-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-1">5. Muestra el resultado</p>
+                                <p class="text-gray-700 text-sm">Después de que el ciclo termine, imprime el valor final
+                                    de <code class="bg-yellow-100 px-2 py-1 rounded text-xs">sumaTotal</code> en la
+                                    consola</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solución Colapsable -->
+                    <div class="mb-8">
+                        <button onclick="toggleSolution()"
+                            class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-between">
+                            <span>Ver Solución</span>
+                            <span id="toggleIcon">▼</span>
+                        </button>
+
+                        <div id="solutionContent" class="hidden mt-4">
+                            <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                                <p class="text-gray-800 font-semibold mb-4">Solución Propuesta:</p>
+                                <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>// 1. Crear la variable acumuladora
+let sumaTotal = 0;
+console.log(`Valor inicial de la suma: ${sumaTotal}`);
+
+// 2. Configurar el ciclo for (del 1 al 100)
+// Empezamos i en 1 y la condición es i <= 100
+for (let i = 1; i <= 100; i++) {
+  
+  // 3. Lógica del ciclo
+  // En cada vuelta, suma el valor de 'i' al acumulador
+  sumaTotal = sumaTotal + i; 
+  // O en forma corta: sumaTotal += i;
+  
+  // Opcional: ver el progreso
+  // console.log(`Sumando ${i}, la suma ahora es: ${sumaTotal}`);
+}
+
+// 4. Mostrar el resultado final
+console.log(`La suma total de los números del 1 al 100 es: ${sumaTotal}`); 
+// Resultado esperado: 5050</code></pre>
+                                <p class="text-gray-700 mt-4"><strong>Resultado esperado:</strong></p>
+                                <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800">Valor inicial de la suma: 0
+La suma total de los números del 1 al 100 es: 5050</pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300">
+                        <p class="text-gray-800 font-semibold mb-2"> Conceptos Clave:</p>
+                        <ul class="text-gray-700 list-disc list-inside space-y-1 text-sm">
+                            <li><strong>Variable acumuladora:</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">sumaTotal</code> guarda el resultado
+                                parcial</li>
+                            <li><strong>Ciclo for:</strong> Se repite 100 veces automáticamente</li>
+                            <li><strong>Operador +=:</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">sumaTotal += i</code> es equivalente a
+                                <code class="bg-white px-2 py-1 rounded text-xs">sumaTotal = sumaTotal + i</code></li>
+                            <li><strong>Fórmula matemática:</strong> La suma de 1 al 100 es siempre 5050 (n × (n+1) / 2)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Práctica B - Juego de Dados -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-8 rounded-lg border-2 border-indigo-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                        Práctica B: Juego de Dados - ¡Evita el 1!
+                    </h2>
+
+                    <!-- Objetivo -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-indigo-700 mb-4">
+                            Objetivo del Juego
+                        </h3>
+                        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <p class="text-gray-800 mb-3">
+                                El objetivo es <strong>sacar un 6</strong>. Empiezas con <strong>3 vidas</strong>. Cada
+                                vez que lanzas y no sacas un 6, sigues jugando. Pero si sacas un 1, <strong>pierdes una
+                                    vida</strong>.
+                            </p>
+                            <p class="text-gray-800">
+                                <strong>Condiciones de victoria/derrota:</strong>
+                            </p>
+                            <ul class="text-gray-700 list-disc list-inside ml-2 mt-2">
+                                <li>✅ <strong>Ganas</strong> si sacas un 6</li>
+                                <li>❌ <strong>Pierdes</strong> si te quedas sin vidas</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Pasos -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-indigo-700 mb-4">
+                            Paso a Paso
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-white p-4 rounded border-l-4 border-indigo-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-2">1️⃣ Crea las variables de estado</p>
+                                <ul class="text-gray-700 list-disc list-inside ml-2 text-sm space-y-1">
+                                    <li>Crea una variable <code
+                                            class="bg-yellow-100 px-2 py-1 rounded text-xs">let vidas</code> y asígnale
+                                        <code class="bg-yellow-100 px-2 py-1 rounded text-xs">3</code></li>
+                                    <li>Crea una variable <code
+                                            class="bg-yellow-100 px-2 py-1 rounded text-xs">let dado</code> y asígnale
+                                        <code class="bg-yellow-100 px-2 py-1 rounded text-xs">0</code> (para guardar
+                                        cada lanzamiento)</li>
+                                    <li>Crea una variable <code
+                                            class="bg-yellow-100 px-2 py-1 rounded text-xs">let ganoElJuego</code> y
+                                        asígnale <code class="bg-yellow-100 px-2 py-1 rounded text-xs">false</code>
+                                        (bandera/flag)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-indigo-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-2">2️⃣ Configura el ciclo while</p>
+                                <p class="text-gray-700 text-sm">El juego debe continuar mientras la variable <code
+                                        class="bg-yellow-100 px-2 py-1 rounded text-xs">vidas</code> sea mayor que 0</p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-indigo-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-2">3️⃣ Lanza el dado</p>
+                                <p class="text-gray-700 text-sm mb-2">Genera un número aleatorio del 1 al 6 y guárdalo
+                                    en <code class="bg-yellow-100 px-2 py-1 rounded text-xs">dado</code></p>
+                                <p class="text-gray-700 text-sm"><strong>Pista:</strong> <code
+                                        class="bg-yellow-100 px-2 py-1 rounded text-xs">dado = Math.floor(Math.random() * 6) + 1;</code>
+                                </p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-indigo-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-2">4️⃣ Imprime el resultado</p>
+                                <p class="text-gray-700 text-sm">Muestra qué sacaste. Ej: <code
+                                        class="bg-yellow-100 px-2 py-1 rounded text-xs">console.log(`Lanzaste un: ${dado}`);</code>
+                                </p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-indigo-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-2">5️⃣ Lógica condicional (if...else if...else)
+                                </p>
+                                <div class="ml-4 mt-2 space-y-2 text-sm">
+                                    <div class="bg-green-50 p-2 rounded border-l-2 border-green-500">
+                                        <p class="font-semibold text-green-700">SI (if) dado === 6:</p>
+                                        <p class="text-gray-700 ml-2">• Imprime "¡Sacaste un 6! ¡Ganaste!"</p>
+                                        <p class="text-gray-700 ml-2">• Cambia <code
+                                                class="bg-yellow-100 px-1 py-0 rounded text-xs">ganoElJuego = true</code>
+                                        </p>
+                                        <p class="text-gray-700 ml-2">• Usa <code
+                                                class="bg-yellow-100 px-1 py-0 rounded text-xs">break;</code> para salir
+                                        </p>
+                                    </div>
+                                    <div class="bg-orange-50 p-2 rounded border-l-2 border-orange-500">
+                                        <p class="font-semibold text-orange-700">SI NO, PERO SI (else if) dado === 1:
+                                        </p>
+                                        <p class="text-gray-700 ml-2">• Resta 1 a vidas: <code
+                                                class="bg-yellow-100 px-1 py-0 rounded text-xs">vidas--</code></p>
+                                        <p class="text-gray-700 ml-2">• Imprime cuántas vidas quedan</p>
+                                    </div>
+                                    <div class="bg-blue-50 p-2 rounded border-l-2 border-blue-500">
+                                        <p class="font-semibold text-blue-700">SI NO (else):</p>
+                                        <p class="text-gray-700 ml-2">• Imprime "Salió un [número]. No pasa nada,
+                                            vuelves a lanzar."</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-indigo-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-2">6️⃣ Muestra el resultado final</p>
+                                <p class="text-gray-700 text-sm">Después del while, verifica si perdiste: <code
+                                        class="bg-yellow-100 px-2 py-1 rounded text-xs">if (ganoElJuego === false) { console.log('¡Game Over!...'); }</code>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solución Colapsable -->
+                    <div class="mb-8">
+                        <button onclick="toggleSolutionB()"
+                            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-between">
+                            <span>Ver Solución</span>
+                            <span id="toggleIconB">▼</span>
+                        </button>
+
+                        <div id="solutionContentB" class="hidden mt-4">
+                            <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                                <p class="text-gray-800 font-semibold mb-4">Solución Propuesta:</p>
+                                <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>// 1. Variables de estado
+let vidas = 3;
+let dado = 0;
+let ganoElJuego = false;
+
+// 2. Ciclo while (mientras haya vidas)
+while (vidas > 0) {
+  
+  // 3. Lanza el dado
+  dado = Math.floor(Math.random() * 6) + 1;
+  
+  // 4. Imprime el resultado
+  console.log(`🎲 Lanzaste un: ${dado}`);
+  
+  // 5. Lógica condicional
+  if (dado === 6) {
+    // ¡Ganaste!
+    console.log(`✅ ¡Sacaste un 6! ¡GANASTE EL JUEGO!`);
+    ganoElJuego = true;
+    break; // Salir inmediatamente
+    
+  } else if (dado === 1) {
+    // Perdiste una vida
+    vidas--;
+    console.log(`❌ ¡Uy! Salió un 1. Pierdes una vida. Te quedan ${vidas} vidas.`);
+    
+  } else {
+    // No pasa nada
+    console.log(`➡️ Salió un ${dado}. No pasa nada, vuelves a lanzar.`);
+  }
+}
+
+// 6. Resultado final
+if (ganoElJuego === false) {
+  console.log(`💀 ¡Game Over! Te quedaste sin vidas. Perdiste el juego.`);
+}</code></pre>
+                                <p class="text-gray-700 mt-4"><strong>Salida ejemplo (puede variar):</strong></p>
+                                <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800">Lanzaste un: 3
+➡️ Salió un 3. No pasa nada, vuelves a lanzar.
+🎲 Lanzaste un: 1
+❌ ¡Uy! Salió un 1. Pierdes una vida. Te quedan 2 vidas.
+🎲 Lanzaste un: 4
+➡️ Salió un 4. No pasa nada, vuelves a lanzar.
+🎲 Lanzaste un: 1
+❌ ¡Uy! Salió un 1. Pierdes una vida. Te quedan 1 vidas.
+🎲 Lanzaste un: 6
+✅ ¡Sacaste un 6! ¡GANASTE EL JUEGO!</pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300">
+                        <p class="text-gray-800 font-semibold mb-3">Conceptos Clave Utilizado:</p>
+                        <ul class="text-gray-700 list-disc list-inside space-y-1 text-sm">
+                            <li><strong>Variables de estado:</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">vidas</code>, <code
+                                    class="bg-white px-2 py-1 rounded text-xs">dado</code>, <code
+                                    class="bg-white px-2 py-1 rounded text-xs">ganoElJuego</code></li>
+                            <li><strong>Ciclo while:</strong> Repetir hasta que <code
+                                    class="bg-white px-2 py-1 rounded text-xs">vidas</code> sea 0</li>
+                            <li><strong>Math.random():</strong> Generar números aleatorios</li>
+                            <li><strong>Condicionales if...else if...else:</strong> Tomar decisiones según el resultado
+                                del dado</li>
+                            <li><strong>Break:</strong> Salir del ciclo cuando ganas</li>
+                            <li><strong>Operador decremento --:</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">vidas--</code> para perder vidas</li>
+                            <li><strong>Flag/Bandera:</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">ganoElJuego</code> para saber si ganaste
+                                o perdiste</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Troubleshooting -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-red-50 to-pink-50 p-8 rounded-lg border-2 border-red-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                        Troubleshooting: Errores Comunes en Ciclos
+                    </h2>
+
+                    <!-- Error 1: Loop Infinito -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-red-700 mb-4">
+                            El Loop Infinito
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-red-100 p-4 rounded-lg border-l-4 border-red-600">
+                                <p class="text-gray-800 font-semibold mb-2">Error:</p>
+                                <pre
+                                    class="bg-gray-900 text-red-400 p-3 rounded overflow-x-auto text-sm"><code>for (let i = 0; i < 10; i--)</code></pre>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500">
+                                <p class="text-gray-800 font-semibold mb-2">Problema:</p>
+                                <p class="text-gray-700">
+                                    Si empiezas en 0 y restas (<code
+                                        class="bg-white px-2 py-1 rounded text-xs">i--</code>), <code
+                                        class="bg-white px-2 py-1 rounded text-xs">i</code> será -1, -2, -3... siempre
+                                    será menor a 10. Nunca para.
+                                </p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <p class="text-gray-800 font-semibold mb-2">Solución:</p>
+                                <p class="text-gray-700">
+                                    Verifica siempre que tu lógica de actualización (<code
+                                        class="bg-white px-2 py-1 rounded text-xs">i++</code> o <code
+                                        class="bg-white px-2 py-1 rounded text-xs">i--</code>) se acerque a romper la
+                                    condición, no a alejarse.
+                                </p>
+                                <div class="mt-3 bg-white p-3 rounded">
+                                    <p class="text-gray-700 text-sm mb-2"><strong>Correcto:</strong></p>
+                                    <pre class="bg-gray-900 text-green-400 p-2 rounded overflow-x-auto text-xs"><code>for (let i = 0; i < 10; i++)  // ✅ Correcto
+for (let i = 10; i > 0; i--)  // ✅ Correcto</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error 2: Off-by-one -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-red-700 mb-4">
+                            El Error "Off-by-one" (Por uno)
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-red-100 p-4 rounded-lg border-l-4 border-red-600">
+                                <p class="text-gray-800 font-semibold mb-2">Error:</p>
+                                <p class="text-gray-700 text-sm mb-2">Quieres recorrer 5 veces pero escribes:</p>
+                                <pre
+                                    class="bg-gray-900 text-red-400 p-3 rounded overflow-x-auto text-sm"><code>for (let i = 0; i <= 5; i++)</code></pre>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500">
+                                <p class="text-gray-800 font-semibold mb-2">Problema:</p>
+                                <p class="text-gray-700 text-sm mb-2">
+                                    De 0 a 5 hay <strong>6 números</strong>, no 5:
+                                </p>
+                                <div class="bg-white p-2 rounded text-sm text-gray-700 font-mono">
+                                    0, 1, 2, 3, 4, 5 = 6 iteraciones ❌
+                                </div>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <p class="text-gray-800 font-semibold mb-2">✅ Solución:</p>
+                                <p class="text-gray-700 text-sm mb-3">Si empiezas en 0, usa <code
+                                        class="bg-white px-2 py-1 rounded text-xs">&lt;</code>. Si empiezas en 1, usa
+                                    <code class="bg-white px-2 py-1 rounded text-xs">&lt;=</code>.</p>
+                                <div class="bg-white p-3 rounded">
+                                    <pre class="bg-gray-900 text-green-400 p-2 rounded overflow-x-auto text-xs"><code>// 5 iteraciones correctas (0,1,2,3,4)
+for (let i = 0; i < 5; i++)   // ✅
+
+// 5 iteraciones correctas (1,2,3,4,5)
+for (let i = 1; i <= 5; i++)  // ✅</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error 3: Scope var vs let -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-red-700 mb-4">
+                            Scope de <code class="bg-white px-2 py-1 rounded text-sm">var</code> vs <code
+                                class="bg-white px-2 py-1 rounded text-sm">let</code> en Ciclos
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-red-100 p-4 rounded-lg border-l-4 border-red-600">
+                                <p class="text-gray-800 font-semibold mb-3">❌ Usando var:</p>
+                                <pre class="bg-gray-900 text-red-400 p-3 rounded overflow-x-auto text-xs"><code>for (var i = 0; i < 5; i++) {
+  console.log(i);
+}
+console.log(i); // 5
+// ❌ i sigue existiendo!</code></pre>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <p class="text-gray-800 font-semibold mb-3">✅ Usando let:</p>
+                                <pre class="bg-gray-900 text-green-400 p-3 rounded overflow-x-auto text-xs"><code>for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+console.log(i); // ERROR!
+// ✅ i sólo existe en el ciclo</code></pre>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-300 mt-4">
+                            <p class="text-gray-800 font-semibold mb-2"> Regla de Oro:</p>
+                            <p class="text-gray-700">
+                                <strong>Siempre usa <code class="bg-white px-2 py-1 rounded text-xs">let</code> en el
+                                    for</strong>. Con <code class="bg-white px-2 py-1 rounded text-xs">var</code>, la
+                                variable <code class="bg-white px-2 py-1 rounded text-xs">i</code> sigue existiendo
+                                fuera del ciclo, lo cual puede causar errores inesperados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Ejercicio Independiente - FizzBuzz -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-cyan-50 to-blue-50 p-8 rounded-lg border-2 border-cyan-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                        Ejercicio Independiente Aplicado: El "FizzBuzz"
+                    </h2>
+
+                    <!-- Descripción -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-cyan-700 mb-4">
+                            ¿Qué es el FizzBuzz?
+                        </h3>
+                        <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                            <p class="text-gray-800 mb-3">
+                                Este es un ejercicio de programación <strong>clásico y legendario</strong> que combina:
+                            </p>
+                            <ul class="text-gray-700 list-disc list-inside space-y-1 ml-2">
+                                <li>Ciclos (<code class="bg-white px-2 py-1 rounded text-xs">for</code>)</li>
+                                <li>Condicionales (<code
+                                        class="bg-white px-2 py-1 rounded text-xs">if...else if...else</code>)</li>
+                                <li>Operador módulo (<code class="bg-white px-2 py-1 rounded text-xs">%</code>)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Instrucciones -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-cyan-700 mb-4">
+                            Instrucciones
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-white p-4 rounded border-l-4 border-cyan-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-2">1️⃣ Ciclo for del 1 al 100</p>
+                                <p class="text-gray-700 text-sm">Escribe un ciclo <code
+                                        class="bg-yellow-100 px-2 py-1 rounded text-xs">for</code> que cuente del 1 al
+                                    100.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-cyan-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-3">2️⃣ Aplica las reglas para cada número</p>
+                                <div class="ml-4 space-y-2 text-sm">
+                                    <div class="bg-green-50 p-2 rounded border-l-2 border-green-500">
+                                        <p class="font-semibold text-green-700">Si divisible por 3 Y 5 (ej. 15):</p>
+                                        <p class="text-gray-700">Imprime: <code
+                                                class="bg-yellow-100 px-2 py-1 rounded text-xs">"FizzBuzz"</code></p>
+                                    </div>
+                                    <div class="bg-blue-50 p-2 rounded border-l-2 border-blue-500">
+                                        <p class="font-semibold text-blue-700">SI NO, pero si divisible por 3 (ej. 9):
+                                        </p>
+                                        <p class="text-gray-700">Imprime: <code
+                                                class="bg-yellow-100 px-2 py-1 rounded text-xs">"Fizz"</code></p>
+                                    </div>
+                                    <div class="bg-purple-50 p-2 rounded border-l-2 border-purple-500">
+                                        <p class="font-semibold text-purple-700">SI NO, pero si divisible por 5 (ej.
+                                            10):</p>
+                                        <p class="text-gray-700">Imprime: <code
+                                                class="bg-yellow-100 px-2 py-1 rounded text-xs">"Buzz"</code></p>
+                                    </div>
+                                    <div class="bg-gray-50 p-2 rounded border-l-2 border-gray-500">
+                                        <p class="font-semibold text-gray-700">Para todos los demás números:</p>
+                                        <p class="text-gray-700">Imprime el número en sí (ej. <code
+                                                class="bg-yellow-100 px-2 py-1 rounded text-xs">7</code>)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded border-l-4 border-cyan-500 shadow-sm">
+                                <p class="text-gray-800 font-semibold mb-2"> Usa el operador módulo (%)</p>
+                                <p class="text-gray-700 text-sm">
+                                    Para saber si un número es divisible por otro, usa <code
+                                        class="bg-yellow-100 px-2 py-1 rounded text-xs">numero % 3 === 0</code>.
+                                    Significa que "el residuo de numero dividido por 3 es 0", o sea, es divisible.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Criterios de Logro -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-cyan-700 mb-4">
+                            Criterios de Logro Esperados
+                        </h3>
+                        <div class="bg-green-50 p-6 rounded-lg border border-green-300">
+                            <ul class="text-gray-700 space-y-2">
+                                <li class="flex items-start">
+                                    <span class="text-green-600 font-bold mr-3">☑</span>
+                                    <span>El ciclo <code class="bg-white px-2 py-1 rounded text-xs">for</code> se
+                                        ejecuta 100 veces.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-green-600 font-bold mr-3">☑</span>
+                                    <span>Se utiliza una estructura <code
+                                            class="bg-white px-2 py-1 rounded text-xs">if...else if...else</code>.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-green-600 font-bold mr-3">☑</span>
+                                    <span>El orden de las condiciones es correcto (la comprobación de "FizzBuzz" debe ir
+                                        primero).</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-green-600 font-bold mr-3">☑</span>
+                                    <span>La salida en consola es correcta: <code
+                                            class="bg-white px-2 py-1 rounded text-xs">1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz, ...</code></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Solución Colapsable -->
+                    <div class="mb-8">
+                        <button onclick="toggleSolutionFizzBuzz()"
+                            class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-between">
+                            <span> Ver Solución</span>
+                            <span id="toggleIconFizzBuzz">▼</span>
+                        </button>
+
+                        <div id="solutionContentFizzBuzz" class="hidden mt-4">
+                            <div class="bg-blue-50 p-6 rounded-lg border border-blue-300">
+                                <p class="text-gray-800 font-semibold mb-4">Solución Propuesta:</p>
+                                <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>// Ciclo for del 1 al 100
+for (let i = 1; i <= 100; i++) {
+  
+  // Aplicamos las reglas
+  if (i % 3 === 0 && i % 5 === 0) {
+    // Divisible por 3 Y 5
+    console.log("FizzBuzz");
+    
+  } else if (i % 3 === 0) {
+    // Divisible solo por 3
+    console.log("Fizz");
+    
+  } else if (i % 5 === 0) {
+    // Divisible solo por 5
+    console.log("Buzz");
+    
+  } else {
+    // Todos los demás números
+    console.log(i);
+  }
+}</code></pre>
+                                <p class="text-gray-700 mt-4"><strong>Salida esperada (primeros 20 elementos):</strong>
+                                </p>
+                                <pre class="bg-gray-100 p-3 rounded text-sm text-gray-800 overflow-x-auto">1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+16
+17
+Fizz
+19
+Buzz</pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300">
+                        <p class="text-gray-800 font-semibold mb-3"> Conceptos Clave Utilizados:</p>
+                        <ul class="text-gray-700 list-disc list-inside space-y-1 text-sm">
+                            <li><strong>Ciclo for:</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">for (let i = 1; i <= 100; i++)</code>
+                                para iterar del 1 al 100</li>
+                            <li><strong>Operador módulo (%):</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">i % 3 === 0</code> verifica divisibilidad
+                            </li>
+                            <li><strong>Operador lógico AND (&&):</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">i % 3 === 0 && i % 5 === 0</code>
+                                verifica dos condiciones</li>
+                            <li><strong>Condicionales:</strong> <code
+                                    class="bg-white px-2 py-1 rounded text-xs">if...else if...else</code> para tomar
+                                decisiones</li>
+                            <li><strong>Orden de condiciones:</strong> Importante verificar "FizzBuzz" primero, sino 15
+                                sería "Fizz" nomás</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: ¿Debería Saber Algo Más? -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-8 rounded-lg border-2 border-emerald-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8">
+                        ¿Debería Saber Algo Más?
+                    </h2>
+
+                    <!-- Ciclos Anidados -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-emerald-700 mb-4">
+                            Ciclos Anidados (Nested Loops)
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Puedes poner un <code class="bg-white px-2 py-1 rounded text-sm">for</code> dentro de otro
+                            <code class="bg-white px-2 py-1 rounded text-sm">for</code>. Esto es común para recorrer
+                            matrices (tablas de Excel con filas y columnas).
+                        </p>
+
+                        <div class="bg-blue-50 p-6 rounded-lg border border-blue-300 mb-4">
+                            <p class="text-gray-800 font-semibold mb-3"> Ejemplo: Tabla de Multiplicar (5×5)</p>
+                            <pre class="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm"><code>// Ciclo externo: filas
+for (let i = 1; i <= 5; i++) {
+  // Ciclo interno: columnas
+  for (let j = 1; j <= 5; j++) {
+    console.log(`${i} × ${j} = ${i * j}`);
+  }
+}</code></pre>
+                        </div>
+
+                        <div class="bg-red-50 p-5 rounded-lg border-l-4 border-red-600">
+                            <p class="text-gray-800 font-bold text-lg mb-3">
+                                Advertencia: Rendimiento
+                            </p>
+                            <p class="text-gray-700 mb-3">
+                                Si tienes un ciclo de <strong>100 vueltas dentro de otro de 100 vueltas</strong>, harás
+                                <strong>10,000 operaciones</strong>. Esto puede hacer lenta tu aplicación.
+                            </p>
+                            <div class="bg-white p-3 rounded text-sm text-gray-700">
+                                <p class="font-semibold mb-2">Cálculo:</p>
+                                <p><code
+                                        class="bg-gray-100 px-2 py-1 rounded">100 ciclos × 100 ciclos = 10,000 operaciones</code>
+                                </p>
+                            </div>
+                            <p class="text-gray-700 mt-3 text-sm">
+                                <strong>Concepto:</strong> En el futuro aprenderás sobre <strong>Big O
+                                    Notation</strong>, que es una forma de medir la eficiencia de tu código.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Iteradores Modernos -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-emerald-700 mb-4">
+                            Iteradores Modernos
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            En el futuro, cuando veamos <strong>Arreglos (Arrays)</strong>, dejaremos de usar tanto el
+                            <code class="bg-white px-2 py-1 rounded text-sm">for</code> clásico y pasaremos a usar
+                            versiones más modernas y limpias.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                                <p class="text-gray-800 font-semibold mb-2">for (clásico)</p>
+                                <pre class="bg-gray-900 text-green-400 p-2 rounded overflow-x-auto text-xs"><code>for (let i = 0; i < arr.length; i++) {
+  console.log(arr[i]);
+}</code></pre>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                                <p class="text-gray-800 font-semibold mb-2">for...of (moderno)</p>
+                                <pre class="bg-gray-900 text-green-400 p-2 rounded overflow-x-auto text-xs"><code>for (let item of arr) {
+  console.log(item);
+}</code></pre>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                                <p class="text-gray-800 font-semibold mb-2">.forEach() (moderno)</p>
+                                <pre class="bg-gray-900 text-green-400 p-2 rounded overflow-x-auto text-xs"><code>arr.forEach(item => {
+  console.log(item);
+});</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 p-5 rounded-lg border border-yellow-300">
+                            <p class="text-gray-800 font-semibold mb-3"> Importante:</p>
+                            <p class="text-gray-700">
+                                <strong>Entender el <code class="bg-white px-2 py-1 rounded text-xs">for</code> clásico
+                                    es obligatorio</strong> para entender la lógica base de cómo funcionan los ciclos.
+                                Los iteradores modernos son solo "azúcar sintáctico" que hacen el código más limpio,
+                                pero por debajo siguen siendo ciclos normales.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+            <footer class="mt-16 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
+                <img src="src/logo.png" class="h-8 mx-auto mb-3 opacity-50 grayscale invert">
+
+                <p>Docente Desarrollador: <strong>Santiago Yosa González</strong></p>
+            </footer>
+
+        </div>
+    </main>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+        const mainContent = document.getElementById('main-content');
+        const menuIcon = document.getElementById('menu-icon');
+        const contentContainer = document.getElementById('content-container');
+
+        // Toggle para móvil
+        function toggleMenu() {
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // Toggle para desktop
+        function toggleSidebarDesktop() {
+            if (sidebar.classList.contains('sidebar-visible')) {
+                // Ocultar sidebar
+                sidebar.classList.remove('sidebar-visible');
+                sidebar.classList.add('sidebar-hidden');
+                toggleSidebarBtn.classList.remove('btn-with-sidebar');
+                toggleSidebarBtn.classList.add('btn-without-sidebar');
+                // Expandir contenido
+                contentContainer.classList.remove('normal');
+                contentContainer.classList.add('expanded');
+                // Cambiar ícono a flecha derecha (mostrar)
+                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>';
+            } else {
+                // Mostrar sidebar
+                sidebar.classList.remove('sidebar-hidden');
+                sidebar.classList.add('sidebar-visible');
+                toggleSidebarBtn.classList.remove('btn-without-sidebar');
+                toggleSidebarBtn.classList.add('btn-with-sidebar');
+                // Restaurar contenido normal
+                contentContainer.classList.remove('expanded');
+                contentContainer.classList.add('normal');
+                // Cambiar ícono a flechas izquierda (ocultar)
+                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>';
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        toggleSidebarBtn.addEventListener('click', toggleSidebarDesktop);
+
+        // Función para toggle de la solución
+        function toggleSolution() {
+            const solutionContent = document.getElementById('solutionContent');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (solutionContent.classList.contains('hidden')) {
+                solutionContent.classList.remove('hidden');
+                toggleIcon.textContent = '▲';
+            } else {
+                solutionContent.classList.add('hidden');
+                toggleIcon.textContent = '▼';
+            }
+        }
+
+        // Función para toggle de la solución B
+        function toggleSolutionB() {
+            const solutionContentB = document.getElementById('solutionContentB');
+            const toggleIconB = document.getElementById('toggleIconB');
+
+            if (solutionContentB.classList.contains('hidden')) {
+                solutionContentB.classList.remove('hidden');
+                toggleIconB.textContent = '▲';
+            } else {
+                solutionContentB.classList.add('hidden');
+                toggleIconB.textContent = '▼';
+            }
+        }
+
+        // Función para toggle de la solución FizzBuzz
+        function toggleSolutionFizzBuzz() {
+            const solutionContentFizzBuzz = document.getElementById('solutionContentFizzBuzz');
+            const toggleIconFizzBuzz = document.getElementById('toggleIconFizzBuzz');
+
+            if (solutionContentFizzBuzz.classList.contains('hidden')) {
+                solutionContentFizzBuzz.classList.remove('hidden');
+                toggleIconFizzBuzz.textContent = '▲';
+            } else {
+                solutionContentFizzBuzz.classList.add('hidden');
+                toggleIconFizzBuzz.textContent = '▼';
+            }
+        }
+    </script>
+</body>
+
+</html>
